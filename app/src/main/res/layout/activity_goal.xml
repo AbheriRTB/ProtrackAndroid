@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SubjectActivity">
+    tools:context=".GoalActivity">
 
     <TextView
         android:id="@+id/tvTitle2"
@@ -14,7 +14,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/victor_mono_semi_bold_italic"
-        android:text="Subjects"
+        android:text="Goals"
         android:textSize="36sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,16 +27,16 @@
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="16dp">
 
-        <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabAdd"
+      <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAddGoal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
             android:clickable="true"
-            app:layout_anchor="@id/mainBottomAppBar2"
-            app:srcCompat="@drawable/add" />-->
+            app:layout_anchor="@id/GoalBottomAppBar"
+            app:srcCompat="@drawable/add" />
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/GoalBottomAppBar"

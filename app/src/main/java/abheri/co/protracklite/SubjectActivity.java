@@ -39,7 +39,7 @@ public class SubjectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subject);
 
-        recyclerView = findViewById(R.id.list);
+        recyclerView = findViewById(R.id.listGoal);
         recyclerView.setHasFixedSize(true);
         tvTitle = findViewById(R.id.tvTitle2);
 

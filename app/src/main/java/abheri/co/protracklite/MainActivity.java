@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -63,9 +64,16 @@ public class MainActivity extends AppCompatActivity {
 
         appBar = findViewById(R.id.mainBottomAppBar);
         setSupportActionBar(appBar);
-        floatingActionButton = findViewById(R.id.fab);
+        floatingActionButton = findViewById(R.id.fabAdd);
 
         floatingActionButton.setColorFilter(Color.WHITE);
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity( new Intent(MainActivity.this, GoalActivity.class));
+            }
+        });
 
         SubjectDataHelper sdh = new SubjectDataHelper(this);
         TopicDataHelper tdh = new TopicDataHelper(this);
@@ -130,10 +138,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (gs.size() <= 0) {
-            gdh.createGoal("Mid-Term Exams", "There will be mid term exams this month", "1/12/2020", 1);
-            gdh.getAllGoals();
-        }
 
+            gdh.createGoal("Mid-Term Exams", "There will be mid term exams this month", "1/12/2020", 1);
+            gdh.createGoal("Sangeeta Exams", "There will be mid term exams this month", "22/11/2020", 2);
+            gdh.getAllGoals();
+
+        }
         TopicMapDataHelper tmdh = new TopicMapDataHelper(this);
         tmdh.createTopicDataMap(1,2,1);
         tmdh.getAllTopicDataMaps();
