@@ -24,6 +24,7 @@ import abheri.co.protracklite.TopicActivity;
 public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> {
 
     private List<Topic> topics;
+    TopicMapDataHelper tmdh;
     MaterialAlertDialogBuilder dialogBuilder;
     Drawable backgroundDialog;
     LayoutInflater inflater;
@@ -37,11 +38,12 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
         topics = list;
         thisContext = context;
         recyclerView = recyclerViewForDialog;
+        tmdh = new TopicMapDataHelper(context);
 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTopics;
+        TextView tvTopic, tvSubject, tvProgress;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -71,7 +73,8 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull TopicAdaptor.ViewHolder holder, int i) {
         holder.itemView.setTag(topics.get(i));
-        //holder.tvTopics.setText(topics.get(i).getName());
+        holder.tvTopic.setText(topics.get(i).getName());
+        holder.tvTopic.setText(topics.get(i).getName());
     }
 
     @Override

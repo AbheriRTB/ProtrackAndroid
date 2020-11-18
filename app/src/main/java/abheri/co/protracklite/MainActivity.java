@@ -21,6 +21,7 @@ import abheri.co.protracklite.utils.Subject;
 import abheri.co.protracklite.utils.SubjectDataHelper;
 import abheri.co.protracklite.utils.Topic;
 import abheri.co.protracklite.utils.TopicDataHelper;
+import abheri.co.protracklite.utils.TopicDataMap;
 import abheri.co.protracklite.utils.TopicMapDataHelper;
 
 public class MainActivity extends AppCompatActivity {
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DBFunctions();
         setContentView(R.layout.activity_main);
 
         appBar = findViewById(R.id.mainBottomAppBar);
@@ -74,15 +76,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivity( new Intent(MainActivity.this, GoalActivity.class));
             }
         });
+    }
 
+    void DBFunctions(){
         SubjectDataHelper sdh = new SubjectDataHelper(this);
         TopicDataHelper tdh = new TopicDataHelper(this);
         GoalDataHelper gdh = new GoalDataHelper(this);
+        TopicMapDataHelper tmdh = new TopicMapDataHelper(this);
 
 
         List<Subject> ls = sdh.getAllSubjects();
         List<Topic> ts = tdh.getAllTopics();
         List<Goal> gs = gdh.getAllGoals();
+        List<TopicDataMap> tds = tmdh.getAllTopicDataMaps();
         if (ls.size() <= 0) {
             sdh.createSubject("English", "English Subject", 1);
             sdh.createSubject("II lang (Hindi)", "Hindi", 2);
@@ -139,14 +145,12 @@ public class MainActivity extends AppCompatActivity {
 
         if (gs.size() <= 0) {
 
-            gdh.createGoal("Mid-Term Exams", "There will be mid term exams this month", "1/12/2020", 1);
-            gdh.createGoal("Sangeeta Exams", "There will be mid term exams this month", "22/11/2020", 2);
+            gdh.createGoal("Mid-Term Exams", "There will be mid term exams this month", "1/12/2020");
+            gdh.createGoal("Sangeeta Exams", "There will be mid term exams this month", "22/11/2020");
             gdh.getAllGoals();
 
         }
-        TopicMapDataHelper tmdh = new TopicMapDataHelper(this);
-        tmdh.createTopicDataMap(1,2,1);
-        tmdh.getAllTopicDataMaps();
+
 
     }
 }

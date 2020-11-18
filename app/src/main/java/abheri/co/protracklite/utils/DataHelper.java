@@ -50,7 +50,7 @@ public class DataHelper extends SQLiteOpenHelper {
 
     private static final String goal_table = "create table "
             + TABLE_GOAL + "(" + COLUMN_GID
-            + " integer primary key, "
+            + " integer primary key AUTOINCREMENT, "
             + COLUMN_GOAL
             + " text not null,"
             + COLUMN_ENDDATE
@@ -75,7 +75,7 @@ public class DataHelper extends SQLiteOpenHelper {
     private static final String topic_data_map_table = "create table "
             + TABLE_TOPIC_DATA_MAP + "("
             + COLUMN_TDMID
-            + " integer primary key, "
+            + " integer primary key AUTOINCREMENT, "
             + GOAL_ID
             + " integer not null,"
             + TOPIC_ID

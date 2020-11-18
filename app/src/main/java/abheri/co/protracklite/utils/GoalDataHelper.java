@@ -34,16 +34,16 @@ public class GoalDataHelper {
         //dbHelper.close();
     }
 
-    public Goal createGoal(String goal, String description, String end_date, int gid) {
+    public Goal createGoal(String goal, String description, String end_date) {
         ContentValues values = new ContentValues();
-        values.put(DataHelper.COLUMN_GID, gid);
         values.put(DataHelper.COLUMN_GOAL, goal);
         values.put(DataHelper.COLUMN_GDISC, description);
         values.put(DataHelper.COLUMN_ENDDATE, end_date);
 
         long insertId = database.insert(DataHelper.TABLE_GOAL, null, values);
+        //values.put(DataHelper.COLUMN_GID, insertId);
         Cursor cursor = database.query(DataHelper.TABLE_GOAL,
-                allColumns, DataHelper.COLUMN_GID + " = " + gid, null,
+                allColumns, DataHelper.COLUMN_GID + " = " + insertId, null,
                 null, null, null);
         cursor.moveToFirst();
         Goal newGoal = cursorToGoal(cursor);

@@ -43,6 +43,7 @@
         app:passwordToggleTint="#D5D5D5">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etGoal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/victor_mono_semi_bold_italic" />
@@ -70,6 +71,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvAddGoal">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etAddDiscription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/victor_mono_semi_bold_italic" />
@@ -108,7 +110,8 @@
         app:iconSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnTime" />
+        app:layout_constraintTop_toBottomOf="@+id/btnTime"
+        android:visibility="gone"/>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
