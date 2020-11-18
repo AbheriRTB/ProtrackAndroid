@@ -12,8 +12,7 @@ import java.util.List;
 public class TopicMapDataHelper {
     private SQLiteDatabase database;
     private DataHelper dbHelper;
-    private String[] allColumns = { DataHelper.TOPIC_ID,
-            DataHelper.GOAL_ID};
+    private String[] allColumns = {DataHelper.COLUMN_TDMID, DataHelper.TOPIC_ID, DataHelper.GOAL_ID};
 
     public TopicMapDataHelper(Context context) {
 
@@ -39,8 +38,10 @@ public class TopicMapDataHelper {
         values.put(DataHelper.COLUMN_TDMID, tdm_id);
         values.put(DataHelper.GOAL_ID, goal_id);
         values.put(DataHelper.TOPIC_ID, topic_id);
+
+        long insertId = database.insert(DataHelper.TABLE_TOPIC_DATA_MAP, null, values);
         Cursor cursor = database.query(DataHelper.TABLE_TOPIC_DATA_MAP,
-                allColumns, DataHelper.COLUMN_SID + " = " + tdm_id, null,
+                allColumns, DataHelper.COLUMN_TDMID + " = " + tdm_id, null,
                 null, null, null);
         cursor.moveToFirst();
         TopicDataMap newTopicDataMap = cursorToTopicDataMap(cursor);
@@ -99,9 +100,9 @@ public class TopicMapDataHelper {
 
     private TopicDataMap cursorToTopicDataMap(Cursor cursor) {
         TopicDataMap topicDataMap = new TopicDataMap();
-        topicDataMap.setTdm_id(cursor.getInt(3));
-        topicDataMap.setGoal_id(cursor.getInt(0));
-        topicDataMap.setTopic_id(cursor.getInt(1));
+        topicDataMap.setTdm_id(cursor.getInt(0));
+        topicDataMap.setGoal_id(cursor.getInt(1));
+        topicDataMap.setTopic_id(cursor.getInt(2));
         return topicDataMap;
     }
 

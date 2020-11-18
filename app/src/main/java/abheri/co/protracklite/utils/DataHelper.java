@@ -73,16 +73,17 @@ public class DataHelper extends SQLiteOpenHelper {
             + "(" + COLUMN_SID + "));";
 
     private static final String topic_data_map_table = "create table "
-            + TABLE_TOPIC_DATA_MAP + "("+ COLUMN_TDMID
+            + TABLE_TOPIC_DATA_MAP + "("
+            + COLUMN_TDMID
             + " integer primary key, "
             + GOAL_ID
-            + " integer,"
+            + " integer not null,"
+            + TOPIC_ID
+            + " integer not null,"
             + " foreign key( "
             + GOAL_ID + ") references "
             + TABLE_GOAL
             + "(" + COLUMN_GID + "),"
-            + TOPIC_ID
-            + " integer not null,"
             + " foreign key( "
             + TOPIC_ID + ") references "
             + TABLE_TOPIC
