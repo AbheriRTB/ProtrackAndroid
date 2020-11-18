@@ -1,4 +1,4 @@
-package abheri.co.protracklite.utils;
+package abheri.co.protracklite.adaptors;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import abheri.co.protracklite.R;
+import abheri.co.protracklite.builders.Subject;
+import abheri.co.protracklite.data.Topic;
 
 
 public class SubjectAdaptor extends RecyclerView.Adapter<SubjectAdaptor.ViewHolder> {
@@ -53,17 +55,17 @@ public class SubjectAdaptor extends RecyclerView.Adapter<SubjectAdaptor.ViewHold
                 public void onClick(View v) {
                     final int i = recyclerView.getChildLayoutPosition(v);
                     CharSequence[] cs = getTopicTitles(subjects.get(i));
-                    if (cs==null){
-                        cs = new CharSequence[] {
+                    if (cs == null) {
+                        cs = new CharSequence[]{
                                 "No Topics defined"
                         };
                     }
 
-                        dialogBuilder.setTitle("Portions")
-                                .setItems(cs,null)
-                                .setPositiveButton("Ok", null)
-                                .setBackground(backgroundDialog)
-                                .show();
+                    dialogBuilder.setTitle("Portions")
+                            .setItems(cs, null)
+                            .setPositiveButton("Ok", null)
+                            .setBackground(backgroundDialog)
+                            .show();
                 }
             });
 
@@ -90,13 +92,12 @@ public class SubjectAdaptor extends RecyclerView.Adapter<SubjectAdaptor.ViewHold
     }
 
 
-
-   private CharSequence[] getTopicTitles(Subject subject) {
+    private CharSequence[] getTopicTitles(Subject subject) {
         ArrayList<String> csl = new ArrayList<String>();
-       CharSequence[] cs = null;
+        CharSequence[] cs = null;
         List<Topic> lt = subject.getTopics();
-        if (lt!= null && lt.size() >0){
-            for(int i=0; i<lt.size(); ++i){
+        if (lt != null && lt.size() > 0) {
+            for (int i = 0; i < lt.size(); ++i) {
                 csl.add(lt.get(i).getName());
             }
             cs = csl.toArray(new CharSequence[lt.size()]);

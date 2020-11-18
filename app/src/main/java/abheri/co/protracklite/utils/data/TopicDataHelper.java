@@ -1,4 +1,4 @@
-package abheri.co.protracklite.utils;
+package abheri.co.protracklite.data;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -13,8 +13,8 @@ public class TopicDataHelper {
 
     private SQLiteDatabase database;
     private DataHelper dbHelper;
-    private String[] allColumns = { DataHelper.COLUMN_TID,
-            DataHelper.COLUMN_TOPIC, DataHelper.COLUMN_TDISC, DataHelper.SUBJECT_ID };
+    private String[] allColumns = {DataHelper.COLUMN_TID,
+            DataHelper.COLUMN_TOPIC, DataHelper.COLUMN_TDISC, DataHelper.SUBJECT_ID};
 
     public TopicDataHelper(Context context) {
         dbHelper = new DataHelper(context);
@@ -58,7 +58,7 @@ public class TopicDataHelper {
     }
 
     public void deleteAllTopics() {
-        int nrows = database.delete(DataHelper.TABLE_TOPIC, "1" , null);
+        int nrows = database.delete(DataHelper.TABLE_TOPIC, "1", null);
         System.out.println(nrows + " Topics deleted");
     }
 
@@ -78,6 +78,7 @@ public class TopicDataHelper {
         cursor.close();
         return topics;
     }
+
     public List<Topic> getTopicsBySubject(long subject_id) {
         List<Topic> topics = new ArrayList<Topic>();
 
