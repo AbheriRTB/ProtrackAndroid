@@ -40,7 +40,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAddTitle"
-        app:passwordToggleTint="#D5D5D5">
+        app:passwordToggleTint="#D5D5D5"
+        app:startIconDrawable="@drawable/flag">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etGoal"
@@ -65,10 +66,10 @@
         app:boxCornerRadiusBottomStart="16dp"
         app:boxCornerRadiusTopEnd="16dp"
         app:boxCornerRadiusTopStart="16dp"
-        app:boxStrokeColor="#D5D5D5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAddGoal">
+        app:layout_constraintTop_toBottomOf="@+id/tvAddGoal"
+        app:startIconDrawable="@drawable/description">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etAddDiscription"
@@ -92,8 +93,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvAddDiscription"
         app:backgroundTint="#D5D5D5"
         app:cornerRadius="8dp"
-        app:iconSize="20dp"
-        />
+        app:iconSize="20dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnChapters"
@@ -111,7 +111,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnTime"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"

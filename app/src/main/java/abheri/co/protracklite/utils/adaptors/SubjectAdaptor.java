@@ -1,4 +1,4 @@
-package abheri.co.protracklite.adaptors;
+package abheri.co.protracklite.utils.adaptors;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import abheri.co.protracklite.R;
-import abheri.co.protracklite.builders.Subject;
-import abheri.co.protracklite.data.Topic;
+import abheri.co.protracklite.utils.builders.Subject;
+import abheri.co.protracklite.utils.data.Topic;
 
 
 public class SubjectAdaptor extends RecyclerView.Adapter<SubjectAdaptor.ViewHolder> {

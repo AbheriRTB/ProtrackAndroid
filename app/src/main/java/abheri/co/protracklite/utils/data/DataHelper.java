@@ -1,4 +1,4 @@
-package abheri.co.protracklite.data;
+package abheri.co.protracklite.utils.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

@@ -4,25 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.widget.TextView;
+import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import abheri.co.protracklite.utils.Goal;
-import abheri.co.protracklite.utils.GoalAdaptor;
-import abheri.co.protracklite.utils.GoalDataHelper;
-import abheri.co.protracklite.utils.OldTopic;
-import abheri.co.protracklite.utils.Subject;
-import abheri.co.protracklite.utils.SubjectAdaptor;
-import abheri.co.protracklite.utils.SubjectDataHelper;
-import abheri.co.protracklite.utils.Topic;
-import abheri.co.protracklite.utils.TopicDataHelper;
+import abheri.co.protracklite.utils.builders.Goal;
+import abheri.co.protracklite.utils.adaptors.GoalAdaptor;
+import abheri.co.protracklite.utils.data.GoalDataHelper;
+import abheri.co.protracklite.utils.data.Topic;
+import abheri.co.protracklite.utils.data.TopicDataHelper;
 
 public class GoalActivity extends AppCompatActivity {
 
@@ -52,7 +48,7 @@ public class GoalActivity extends AppCompatActivity {
         goals = gdh.getAllGoals();
         TopicDataHelper tdh = new TopicDataHelper(this);
 
-        for (int i = 0; i < goals.size(); i++){
+        for (int i = 0; i < goals.size(); i++) {
             List<Topic> lt;
             lt = tdh.getTopicsBySubject(goals.get(i).getId());
         }
@@ -60,6 +56,13 @@ public class GoalActivity extends AppCompatActivity {
         LayoutInflater inflater = GoalActivity.this.getLayoutInflater();
         myAdaptor = new GoalAdaptor(this, goals, recyclerView);
         recyclerView.setAdapter(myAdaptor);
+
+        fabAddGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(GoalActivity.this, AddActivity.class));
+            }
+        });
 
     }
 }

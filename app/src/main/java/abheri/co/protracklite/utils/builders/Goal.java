@@ -1,4 +1,4 @@
-package abheri.co.protracklite.builders;
+package abheri.co.protracklite.utils.builders;
 
 public class Goal {
     private String Name, Description, Date;

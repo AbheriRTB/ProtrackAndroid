@@ -13,12 +13,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-import abheri.co.protracklite.utils.SubjectAdaptor;
-import abheri.co.protracklite.utils.Subject;
-import abheri.co.protracklite.utils.SubjectDataHelper;
-import abheri.co.protracklite.utils.OldTopic;
-import abheri.co.protracklite.utils.Topic;
-import abheri.co.protracklite.utils.TopicDataHelper;
+import abheri.co.protracklite.utils.adaptors.SubjectAdaptor;
+import abheri.co.protracklite.utils.builders.Subject;
+import abheri.co.protracklite.utils.data.SubjectDataHelper;
+import abheri.co.protracklite.utils.builders.OldTopic;
+import abheri.co.protracklite.utils.data.Topic;
+import abheri.co.protracklite.utils.data.TopicDataHelper;
 
 public class SubjectActivity extends AppCompatActivity {
 
@@ -115,7 +115,7 @@ public class SubjectActivity extends AppCompatActivity {
         TopicDataHelper tdh = new TopicDataHelper(this);
         topics = tdh.getAllTopics();
 
-        for (int i = 0; i < subjects.size(); i++){
+        for (int i = 0; i < subjects.size(); i++) {
             List<Topic> lt;
             lt = tdh.getTopicsBySubject(subjects.get(i).getId());
             subjects.get(i).setTopics(lt);

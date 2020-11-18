@@ -1,4 +1,4 @@
-package abheri.co.protracklite.data;
+package abheri.co.protracklite.utils.data;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,8 +9,8 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import abheri.co.protracklite.builders.Goal;
-import abheri.co.protracklite.builders.TopicDataMap;
+import abheri.co.protracklite.utils.builders.Goal;
+import abheri.co.protracklite.utils.builders.TopicDataMap;
 
 public class TopicMapDataHelper {
     private SQLiteDatabase database;

@@ -38,7 +38,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:fontFamily="@font/victor_mono_semi_bold_italic"
-        android:text="50%"
+        android:text="0%"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -1,4 +1,4 @@
-package abheri.co.protracklite.adaptors;
+package abheri.co.protracklite.utils.adaptors;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -16,10 +16,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.util.List;
 
 import abheri.co.protracklite.R;
-import abheri.co.protracklite.builders.TopicDataMap;
-import abheri.co.protracklite.data.Topic;
-import abheri.co.protracklite.data.TopicDataHelper;
-import abheri.co.protracklite.data.TopicMapDataHelper;
+import abheri.co.protracklite.utils.builders.TopicDataMap;
+import abheri.co.protracklite.utils.data.Topic;
+import abheri.co.protracklite.utils.data.TopicDataHelper;
+import abheri.co.protracklite.utils.data.TopicMapDataHelper;
 
 
 public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> {

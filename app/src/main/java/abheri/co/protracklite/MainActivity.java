@@ -11,18 +11,19 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-import abheri.co.protracklite.utils.Goal;
-import abheri.co.protracklite.utils.GoalDataHelper;
-import abheri.co.protracklite.utils.Subject;
-import abheri.co.protracklite.utils.SubjectDataHelper;
-import abheri.co.protracklite.utils.Topic;
-import abheri.co.protracklite.utils.TopicDataHelper;
-import abheri.co.protracklite.utils.TopicDataMap;
-import abheri.co.protracklite.utils.TopicMapDataHelper;
+import abheri.co.protracklite.utils.builders.Goal;
+import abheri.co.protracklite.utils.data.GoalDataHelper;
+import abheri.co.protracklite.utils.builders.Subject;
+import abheri.co.protracklite.utils.data.SubjectDataHelper;
+import abheri.co.protracklite.utils.data.Topic;
+import abheri.co.protracklite.utils.data.TopicDataHelper;
+import abheri.co.protracklite.utils.builders.TopicDataMap;
+import abheri.co.protracklite.utils.data.TopicMapDataHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -73,12 +74,12 @@ public class MainActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity( new Intent(MainActivity.this, GoalActivity.class));
+                startActivity(new Intent(MainActivity.this, GoalActivity.class));
             }
         });
     }
 
-    void DBFunctions(){
+    void DBFunctions() {
         SubjectDataHelper sdh = new SubjectDataHelper(this);
         TopicDataHelper tdh = new TopicDataHelper(this);
         GoalDataHelper gdh = new GoalDataHelper(this);
@@ -141,14 +142,6 @@ public class MainActivity extends AppCompatActivity {
             tdh.createTopic(34, "Why Do We Fall Ill", "This is Biology chapter IV", 7);
             tdh.createTopic(35, "Natural Resources", "This is Biology chapter V", 7);
             tdh.getAllTopics();
-        }
-
-        if (gs.size() <= 0) {
-
-            gdh.createGoal("Mid-Term Exams", "There will be mid term exams this month", "1/12/2020");
-            gdh.createGoal("Sangeeta Exams", "There will be mid term exams this month", "22/11/2020");
-            gdh.getAllGoals();
-
         }
 
 
