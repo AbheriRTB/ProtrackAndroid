@@ -1,4 +1,4 @@
-package abheri.co.protracklite.utils;
+package abheri.co.protracklite.utils.builders;
 
 public class TopicDataMap {
     private int topic_id;

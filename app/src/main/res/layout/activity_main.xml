@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="46dp"
+        android:layout_marginLeft="46dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="46dp"
+        android:layout_marginRight="46dp"
+        android:progressDrawable="@drawable/track"
+        android:thumb="@color/transparent"
+        android:indeterminate="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,18 +39,17 @@
             android:background="#FFFFFF"
             app:backgroundTint="@color/colorPrimary"
             app:fabAlignmentMode="end"
-            app:menu="@menu/main_menue"
-            />
+            app:menu="@menu/main_menue" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            app:layout_anchor="@id/mainBottomAppBar"
-            app:srcCompat="@drawable/book"
             android:tint="@android:color/white"
-            />
+            app:layout_anchor="@id/mainBottomAppBar"
+            app:srcCompat="@drawable/book" />
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,20 +10,23 @@ import android.widget.EditText;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.timepicker.MaterialTimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import abheri.co.protracklite.utils.Goal;
-import abheri.co.protracklite.utils.GoalDataHelper;
-import abheri.co.protracklite.utils.Topic;
-import abheri.co.protracklite.utils.TopicDataHelper;
-import abheri.co.protracklite.utils.TopicDataMap;
-import abheri.co.protracklite.utils.TopicMapDataHelper;
+import abheri.co.protracklite.utils.builders.Goal;
+import abheri.co.protracklite.utils.data.GoalDataHelper;
+import abheri.co.protracklite.utils.data.Topic;
+import abheri.co.protracklite.utils.data.TopicDataHelper;
+import abheri.co.protracklite.utils.builders.TopicDataMap;
+import abheri.co.protracklite.utils.data.TopicMapDataHelper;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -34,7 +37,7 @@ public class AddActivity extends AppCompatActivity {
     String[] listItems;
     List<Topic> topics;
     CharSequence[] cs = null;
-    String goalName, goalDescription;
+    String goalName, goalDescription, endDate;
     ArrayList<Integer> dataMaps;
     boolean[] checkedItems;
     TopicMapDataHelper tdc;
@@ -68,6 +71,19 @@ public class AddActivity extends AppCompatActivity {
         btnTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
+                builder.build();
+                builder.setTitleText("SELECT A DATE");
+                final MaterialDatePicker<Long> materialDatePicker = builder.build();
+                materialDatePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
+                materialDatePicker.addOnPositiveButtonClickListener(
+                        new MaterialPickerOnPositiveButtonClickListener() {
+                            @Override
+                            public void onPositiveButtonClick(Object selection) {
+                                btnTime.setText("End Date is : " + materialDatePicker.getHeaderText());
+                                endDate = materialDatePicker.getHeaderText();
+                            }
+                        });
 
             }
         });
@@ -83,7 +99,11 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Create New Goal
-                Goal newGoal = gdc.createGoal(etName.getText().toString(), etDescription.getText().toString(), "1/2/2020");
+                Goal newGoal = gdc.createGoal(etName.getText().toString(), etDescription.getText().toString(), endDate);
+
+                // Intent to Goals
+                Intent intent = new Intent(AddActivity.this, GoalActivity.class);
+                //intent.putExtra("goal_id", newGoal.getId());
 
                 // Topic Map Dialog
                 MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(AddActivity.this);
@@ -110,12 +130,12 @@ public class AddActivity extends AppCompatActivity {
                             tdc.createTopicDataMap(topic_id, newGoal.getId());
                         }
                         dataMaps.clear();
-                        startActivity(new Intent(AddActivity.this, GoalActivity.class));
+                        startActivity(intent);
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        startActivity(new Intent(AddActivity.this, GoalActivity.class));
+                        startActivity(intent);
                     }
                 }).show();
 

@@ -1,12 +1,13 @@
-package abheri.co.protracklite.utils;
+package abheri.co.protracklite.utils.builders;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import abheri.co.protracklite.utils.data.Topic;
 
 public class Subject {
     private long id;
     private String Name, Description;
-   List<Topic> topics;
+    List<Topic> topics;
 
     public Subject(long id, String name, String description, List<Topic> topics) {
         this.id = id;

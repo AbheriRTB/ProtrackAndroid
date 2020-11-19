@@ -7,12 +7,14 @@
         android:icon="@drawable/add"
         android:title="Add"
         app:showAsAction="ifRoom" />
-    <item android:title="About"
+    <item
+        android:title="About"
         android:id="@+id/aboutMenu"
         android:icon="@drawable/about"
-        app:showAsAction="never"/>
-    <item android:title="Manage"
+        app:showAsAction="never" />
+    <item
+        android:title="Manage"
         android:id="@+id/manageMenu"
         android:icon="@drawable/manage"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
 </menu>

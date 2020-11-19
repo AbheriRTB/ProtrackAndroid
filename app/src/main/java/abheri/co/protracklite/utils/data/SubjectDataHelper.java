@@ -1,4 +1,4 @@
-package abheri.co.protracklite.utils;
+package abheri.co.protracklite.utils.data;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,11 +9,13 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import abheri.co.protracklite.utils.builders.Subject;
+
 public class SubjectDataHelper {
     private SQLiteDatabase database;
     private DataHelper dbHelper;
-    private String[] allColumns = { DataHelper.COLUMN_SID,
-            DataHelper.COLUMN_SUBJECT,DataHelper.COLUMN_SUBDISC, DataHelper.COLUMN_SID };
+    private String[] allColumns = {DataHelper.COLUMN_SID,
+            DataHelper.COLUMN_SUBJECT, DataHelper.COLUMN_SUBDISC, DataHelper.COLUMN_SID};
 
     public SubjectDataHelper(Context context) {
 

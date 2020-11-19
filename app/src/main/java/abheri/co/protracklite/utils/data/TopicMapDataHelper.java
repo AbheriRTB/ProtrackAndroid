@@ -1,4 +1,4 @@
-package abheri.co.protracklite.utils;
+package abheri.co.protracklite.utils.data;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import abheri.co.protracklite.utils.builders.Goal;
+import abheri.co.protracklite.utils.builders.TopicDataMap;
 
 public class TopicMapDataHelper {
     private SQLiteDatabase database;
@@ -80,10 +83,10 @@ public class TopicMapDataHelper {
         return topicDataMaps;
     }
 
-    public List<TopicDataMap> getTopicDataMaps(long subject_id) {
+    public List<TopicDataMap> getTopicDataMaps(long goal_id) {
         List<TopicDataMap> topicDataMaps = new ArrayList<TopicDataMap>();
 
-        String query = "SELECT * FROM " + DataHelper.TABLE_TOPIC_DATA_MAP + " WHERE " + DataHelper.COLUMN_SID + "=" + subject_id + ";";
+        String query = "SELECT * FROM " + DataHelper.TABLE_TOPIC_DATA_MAP + " WHERE " + DataHelper.COLUMN_GID + "=" + goal_id + ";";
 
         Cursor cursor = database.rawQuery(query, null);
 

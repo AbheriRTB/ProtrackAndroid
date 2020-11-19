@@ -1,4 +1,4 @@
-package abheri.co.protracklite.utils;
+package abheri.co.protracklite.utils.adaptors;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +18,7 @@ import java.util.List;
 
 import abheri.co.protracklite.R;
 import abheri.co.protracklite.TopicActivity;
+import abheri.co.protracklite.utils.builders.Goal;
 
 
 public class GoalAdaptor extends RecyclerView.Adapter<GoalAdaptor.ViewHolder> {

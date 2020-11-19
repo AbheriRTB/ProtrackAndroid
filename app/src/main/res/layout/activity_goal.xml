@@ -27,7 +27,7 @@
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="16dp">
 
-      <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabAddGoal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,7 +36,8 @@
             android:layout_marginBottom="16dp"
             android:clickable="true"
             app:layout_anchor="@id/GoalBottomAppBar"
-            app:srcCompat="@drawable/add" />
+            app:srcCompat="@drawable/add"
+            android:focusable="true" />
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/GoalBottomAppBar"
