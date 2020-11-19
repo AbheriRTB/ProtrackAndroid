@@ -98,12 +98,44 @@ public class TopicMapDataHelper {
         return topicDataMaps;
     }
 
+    public List<GoalDetails> getTopicsForGoal(long goal_id) {
+        List<GoalDetails> goalDetails = new ArrayList<GoalDetails>();
+
+        String query = "SELECT " + DataHelper.TOPIC_ID + "," + DataHelper.GOAL_ID + "," + DataHelper.COLUMN_TOPIC +
+                         " FROM " + DataHelper.TABLE_TOPIC_DATA_MAP + " a " +
+                         " INNER JOIN " + DataHelper.TABLE_TOPIC + " b on " +
+                         "a." + DataHelper.TOPIC_ID + "=" +
+                         "b." + DataHelper.COLUMN_TID +
+                         " WHERE a." + DataHelper.GOAL_ID + "=" + goal_id +
+                         ";";
+
+        Cursor cursor = database.rawQuery(query, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            GoalDetails goalDetail = cursorToTopicMap(cursor);
+            goalDetails.add(goalDetail);
+            cursor.moveToNext();
+        }
+        // make sure to close the cursor
+        cursor.close();
+        return goalDetails;
+    }
+
     private TopicDataMap cursorToTopicDataMap(Cursor cursor) {
         TopicDataMap topicDataMap = new TopicDataMap();
         topicDataMap.setTdm_id(cursor.getInt(0));
         topicDataMap.setGoal_id(cursor.getInt(1));
         topicDataMap.setTopic_id(cursor.getInt(2));
         return topicDataMap;
+    }
+
+    private GoalDetails cursorToTopicMap(Cursor cursor) {
+        GoalDetails goalDetails = new GoalDetails();
+        goalDetails.setTopic_id(cursor.getInt(0));
+        goalDetails.setTopic_name(cursor.getString(2));
+
+        return goalDetails;
     }
 
 }

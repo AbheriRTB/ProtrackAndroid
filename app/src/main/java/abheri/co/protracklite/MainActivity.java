@@ -151,6 +151,11 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        if(tds.size() <= 0){
+            tmdh.createTopicDataMap(1,1);
+        }
+        tmdh.getTopicsForGoal(1);
+
 
     }
 }
