@@ -34,6 +34,11 @@ public class DataHelper extends SQLiteOpenHelper {
     public static final String GOAL_ID = "goal_id";
 
 
+    public static final String TABLE_PROGRESS = "topic_data_map";
+    public static final String COLUMN_PROGRESS = "topic_map_id";
+    public static final String COLUMN_DATE = "topic_id";
+
+
     private static final String DATABASE_NAME = "protrack.db";
 
     private static final int DATABASE_VERSION = 1;
@@ -71,6 +76,19 @@ public class DataHelper extends SQLiteOpenHelper {
             + SUBJECT_ID + ") references "
             + TABLE_SUBJECT
             + "(" + COLUMN_SID + "));";
+
+    private static final String progress_table = "create table "
+            + TABLE_PROGRESS + "("
+            + COLUMN_PROGRESS
+            + " integer not null,"
+            + COLUMN_DATE
+            + " date not null,"
+            + TOPIC_ID
+            + " integer,"
+            + " foreign key( "
+            + TOPIC_ID + ") references "
+            + TABLE_TOPIC
+            + "(" + COLUMN_TID + "));";
 
     private static final String topic_data_map_table = "create table "
             + TABLE_TOPIC_DATA_MAP + "("

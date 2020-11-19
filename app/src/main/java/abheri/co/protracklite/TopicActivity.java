@@ -36,7 +36,7 @@ public class TopicActivity extends AppCompatActivity {
         TopicDataHelper tdh = new TopicDataHelper(this);
         topics = tdh.getAllTopics();
 
-        //id_goal = getIntent().getLongExtra("goal_id", 1);
+        id_goal = getIntent().getLongExtra("goal_id", 0);
 
         LayoutInflater inflater = TopicActivity.this.getLayoutInflater();
         myAdaptor = new TopicAdaptor(this, topics, recyclerView, id_goal);

@@ -144,14 +144,6 @@ public class MainActivity extends AppCompatActivity {
             tdh.getAllTopics();
         }
 
-        if (gs.size() <= 0) {
-
-            gdh.createGoal("Mid-Term Exams", "There will be mid term exams this month", "1/12/2020");
-            gdh.createGoal("Sangeeta Exams", "There will be mid term exams this month", "22/11/2020");
-            gdh.getAllGoals();
-
-        }
-
         if(tds.size() <= 0){
             tmdh.createTopicDataMap(1,1);
         }

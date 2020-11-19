@@ -16,7 +16,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.util.List;
 
 import abheri.co.protracklite.R;
+import abheri.co.protracklite.utils.builders.GoalDetails;
+import abheri.co.protracklite.utils.builders.Subject;
 import abheri.co.protracklite.utils.builders.TopicDataMap;
+import abheri.co.protracklite.utils.data.SubjectDataHelper;
 import abheri.co.protracklite.utils.data.Topic;
 import abheri.co.protracklite.utils.data.TopicDataHelper;
 import abheri.co.protracklite.utils.data.TopicMapDataHelper;
@@ -26,6 +29,7 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
 
     private List<Topic> topics;
     TopicMapDataHelper tmdh;
+    SubjectDataHelper sdh;
     MaterialAlertDialogBuilder dialogBuilder;
     Drawable backgroundDialog;
     LayoutInflater inflater;
@@ -35,16 +39,23 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
     TextView tvTopic, tvProgress, tvSubject;
     long goal_id;
     List<TopicDataMap> tdm;
-    List<TopicDataHelper> tdh;
+    List<GoalDetails> gd;
+    List<Subject> allSubjects;
 
 
-    public TopicAdaptor(Context context, List<Topic> list, RecyclerView recyclerViewForDialog, long goal_id) {
+
+    public TopicAdaptor(Context context, List<Topic> list, RecyclerView recyclerViewForDialog, long id_goal) {
         topics = list;
         thisContext = context;
         recyclerView = recyclerViewForDialog;
         tmdh = new TopicMapDataHelper(context);
-        this.goal_id = goal_id;
-        //tdm = tmdh.getTopicDataMaps(goal_id);
+
+        goal_id = id_goal;
+        gd = tmdh.getTopicsForGoal(goal_id);
+
+        sdh = new SubjectDataHelper(context);
+        allSubjects = sdh.getAllSubjects();
+        updateSubjectInfo();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -60,7 +71,6 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
                 @Override
                 public void onClick(View v) {
                     final int i = recyclerView.getChildLayoutPosition(v);
-
                 }
             });
 
@@ -79,13 +89,25 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
     public void onBindViewHolder(@NonNull TopicAdaptor.ViewHolder holder, int i) {
 //        int topic_id = tdm.get(i).getTopic_id();
 
-        holder.itemView.setTag(topics.get(i));
-        holder.tvTopic.setText(topics.get(i).getName());
+        holder.itemView.setTag(gd.get(i));
+        holder.tvTopic.setText(gd.get(i).getTopic_name());
+        holder.tvSubject.setText(gd.get(i).getSubject_name());
     }
 
     @Override
     public int getItemCount() {
-        return topics.size();
+        return gd.size();
+    }
+
+    private void updateSubjectInfo(){
+        for(int i=0; i<gd.size(); ++i){
+            for(int j=0; j<allSubjects.size(); ++j){
+                if(gd.get(i).getSubject_id() == allSubjects.get(j).getId()){
+                    gd.get(i).setSubject_name(allSubjects.get(j).getName());
+                    break;
+                }
+            }
+        }
     }
 
 

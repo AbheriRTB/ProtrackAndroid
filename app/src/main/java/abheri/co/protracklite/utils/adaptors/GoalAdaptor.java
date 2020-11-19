@@ -52,6 +52,7 @@ public class GoalAdaptor extends RecyclerView.Adapter<GoalAdaptor.ViewHolder> {
                 public void onClick(View v) {
                     final int i = recyclerView.getChildLayoutPosition(v);
                     intent = new Intent(v.getContext(), TopicActivity.class);
+                    intent.putExtra("goal_id", goal.get(i).getId());
                     v.getContext().startActivity(intent);
 
                 }

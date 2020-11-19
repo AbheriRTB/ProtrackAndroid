@@ -1,4 +1,4 @@
-package abheri.co.protracklite.utils;
+package abheri.co.protracklite.utils.builders;
 
 public class GoalDetails {
     int goal_id;
@@ -6,6 +6,7 @@ public class GoalDetails {
     int topic_id;
 
 
+    String goal_end_date;
     String goal_name;
     String goal_description;
     String subject_name;
@@ -79,5 +80,13 @@ public class GoalDetails {
 
     public void setTopic_name(String topic_name) {
         this.topic_name = topic_name;
+    }
+
+    public String getGoal_end_date() {
+        return goal_end_date;
+    }
+
+    public void setGoal_end_date(String goal_end_date) {
+        this.goal_end_date = goal_end_date;
     }
 }

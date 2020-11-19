@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import abheri.co.protracklite.utils.builders.Goal;
+import abheri.co.protracklite.utils.builders.GoalDetails;
 import abheri.co.protracklite.utils.builders.TopicDataMap;
 
 public class TopicMapDataHelper {
@@ -104,7 +105,8 @@ public class TopicMapDataHelper {
     public List<GoalDetails> getTopicsForGoal(long goal_id) {
         List<GoalDetails> goalDetails = new ArrayList<GoalDetails>();
 
-        String query = "SELECT " + DataHelper.TOPIC_ID + "," + DataHelper.GOAL_ID + "," + DataHelper.COLUMN_TOPIC +
+        String query = "SELECT " + DataHelper.TOPIC_ID + "," + DataHelper.COLUMN_TOPIC + "," +DataHelper.SUBJECT_ID + "," +
+                         DataHelper.GOAL_ID +
                          " FROM " + DataHelper.TABLE_TOPIC_DATA_MAP + " a " +
                          " INNER JOIN " + DataHelper.TABLE_TOPIC + " b on " +
                          "a." + DataHelper.TOPIC_ID + "=" +
@@ -135,8 +137,12 @@ public class TopicMapDataHelper {
 
     private GoalDetails cursorToTopicMap(Cursor cursor) {
         GoalDetails goalDetails = new GoalDetails();
+
         goalDetails.setTopic_id(cursor.getInt(0));
-        goalDetails.setTopic_name(cursor.getString(2));
+        goalDetails.setTopic_name(cursor.getString(1));
+        goalDetails.setSubject_id(cursor.getInt(2));
+
+        goalDetails.setGoal_id(cursor.getInt(3));
 
         return goalDetails;
     }
