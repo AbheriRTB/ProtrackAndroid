@@ -102,8 +102,8 @@ public class AddActivity extends AppCompatActivity {
                 Goal newGoal = gdc.createGoal(etName.getText().toString(), etDescription.getText().toString(), endDate);
 
                 // Intent to Goals
-                Intent intent = new Intent(AddActivity.this, TopicActivity.class);
-                intent.putExtra("goal_id", newGoal.getId());
+                Intent intent = new Intent(AddActivity.this, GoalActivity.class);
+                //intent.putExtra("goal_id", newGoal.getId());
 
                 // Topic Map Dialog
                 MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(AddActivity.this);
