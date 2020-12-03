@@ -37,7 +37,7 @@ public class DataHelper extends SQLiteOpenHelper {
     public static final String TABLE_PROGRESS = "progress";
     public static final String COLUMN_PROGRESS = "progress";
     public static final String COLUMN_PID = "_id";
-    public static final String TOPICDATA_ID = "topic_map_id";
+    public static final String TOPICDATA_ID = "topic_map_id_fk";
     public static final String COLUMN_DATE = "date";
 
 

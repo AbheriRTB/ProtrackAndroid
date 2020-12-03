@@ -18,11 +18,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import abheri.co.protracklite.utils.builders.Goal;
 import abheri.co.protracklite.utils.data.GoalDataHelper;
 import abheri.co.protracklite.utils.builders.Topic;
+import abheri.co.protracklite.utils.data.ProgressDataHelper;
 import abheri.co.protracklite.utils.data.TopicDataHelper;
 import abheri.co.protracklite.utils.builders.TopicDataMap;
 import abheri.co.protracklite.utils.data.TopicMapDataHelper;
@@ -42,6 +44,7 @@ public class AddActivity extends AppCompatActivity {
     TopicMapDataHelper tdc;
     TopicDataMap tdm;
     GoalDataHelper gdc;
+    ProgressDataHelper pdh;
     int topic_id, goal_id;
 
     @Override
@@ -58,6 +61,7 @@ public class AddActivity extends AppCompatActivity {
         dataMaps = new ArrayList<>();
         tdc = new TopicMapDataHelper(AddActivity.this);
         gdc = new GoalDataHelper(AddActivity.this);
+        pdh = new ProgressDataHelper(AddActivity.this);
         tdm = new TopicDataMap();
 
         setSupportActionBar(appBar);
@@ -127,6 +131,10 @@ public class AddActivity extends AppCompatActivity {
                             topic_id = dataMaps.get(i);
                             //tdc.deleteTopicDataMap();
                             tdc.createTopicDataMap(topic_id, newGoal.getId());
+                            Calendar calendar = Calendar.getInstance();
+                            String time = calendar.get(Calendar.DATE) + "/" + calendar.get(Calendar.MONTH) + "/"
+                                    + calendar.get(Calendar.YEAR);
+                            pdh.createProgress(0, time, tdc.getAllTopicDataMaps().get(i).getTdm_id());
                         }
                         dataMaps.clear();
                         startActivity(intent);

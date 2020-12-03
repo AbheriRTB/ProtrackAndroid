@@ -20,6 +20,7 @@ import java.util.List;
 import abheri.co.protracklite.R;
 import abheri.co.protracklite.utils.builders.GoalDetails;
 import abheri.co.protracklite.utils.builders.Progress;
+import abheri.co.protracklite.utils.builders.ProgressDetails;
 import abheri.co.protracklite.utils.builders.Subject;
 import abheri.co.protracklite.utils.builders.TopicDataMap;
 import abheri.co.protracklite.utils.data.ProgressDataHelper;
@@ -43,6 +44,7 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
     List<TopicDataMap> tdm;
     List<GoalDetails> gd;
     List<Subject> allSubjects;
+    List<ProgressDetails> progressDetails;
     ProgressDataHelper pdh;
     List<Progress> ps;
     Slider slider;
@@ -57,6 +59,7 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
 
         goal_id = id_goal;
         gd = tmdh.getTopicsForGoal(goal_id);
+
 
         sdh = new SubjectDataHelper(context);
         allSubjects = sdh.getAllSubjects();
@@ -77,6 +80,7 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+
             tvTopicDialog = itemView.findViewById(R.id.tvTopicDialog);
             tvTopic = itemView.findViewById(R.id.tvGoalTitle);
             tvSubject = itemView.findViewById(R.id.tvSubject);
@@ -91,7 +95,6 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
                 @Override
                 public void onClick(View v) {
                     final int i = recyclerView.getChildLayoutPosition(v);
-
                     //dialogBuilder.setView(view);
                     tvTopicDialog.setText(gd.get(i).getTopic_name());
                     tvSubjectDialog.setText(gd.get(i).getSubject_name());
@@ -115,10 +118,15 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
     public void onBindViewHolder(@NonNull TopicAdaptor.ViewHolder holder, int i) {
 //        int topic_id = tdm.get(i).getTopic_id();
 
+        progressDetails = pdh.getProgressesByTopicID(gd.get(i).getTopic_id());
+
         holder.itemView.setTag(gd.get(i));
         holder.tvTopic.setText(gd.get(i).getTopic_name());
         holder.tvSubject.setText(gd.get(i).getSubject_name());
-        holder.tvProgress.setText(ps.get(i).getProgress() + "%");
+        if(progressDetails.size() > 0)
+            holder.tvProgress.setText(progressDetails.get(progressDetails.size()-1).getProgress() + "%");
+        else
+            holder.tvProgress.setText("0");
     }
 
     @Override
@@ -141,6 +149,8 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
         View view = inflater.inflate(R.layout.dialog_status, null);
         statusDialog.setView(view);
 
+        progressDetails = pdh.getProgressesByTopicID(ps.get(i).getTopicdata_id());
+
         tvTopic = view.findViewById(R.id.tvTopicDialog);
         tvSubjectDialog = view.findViewById(R.id.tvSubjectDialog);
         //tvDescriptionDialog = view.findViewById(R.id.tvDescriptionDialog);
@@ -149,7 +159,9 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
         tvSubjectDialog.setText(gd.get(i).getSubject_name());
         //tvDescriptionDialog.setText(gd.get(i).getGoal_description());
         int progress = 0;
-        progress = ps.get(i).getProgress();
+        if(progressDetails.size() > 0) {
+            progress = progressDetails.get(progressDetails.size()-1).getProgress();
+        }
         tvProgressDialog.setText(progress + "%");
         /*statusDialog.setTitle(gd.get(i).getTopic_name())
                 .setMessage("This is " + gd.get(i).getTopic_name() + " of " + gd.get(i).getSubject_name() );*/

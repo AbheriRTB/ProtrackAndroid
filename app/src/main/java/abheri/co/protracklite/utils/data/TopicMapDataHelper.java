@@ -105,14 +105,14 @@ public class TopicMapDataHelper {
     public List<GoalDetails> getTopicsForGoal(long goal_id) {
         List<GoalDetails> goalDetails = new ArrayList<GoalDetails>();
 
-        String query = "SELECT " + DataHelper.TOPIC_ID + "," + DataHelper.COLUMN_TOPIC + "," +DataHelper.SUBJECT_ID + "," +
-                         DataHelper.GOAL_ID +
-                         " FROM " + DataHelper.TABLE_TOPIC_DATA_MAP + " a " +
-                         " INNER JOIN " + DataHelper.TABLE_TOPIC + " b on " +
-                         "a." + DataHelper.TOPIC_ID + "=" +
-                         "b." + DataHelper.COLUMN_TID +
-                         " WHERE a." + DataHelper.GOAL_ID + "=" + goal_id +
-                         ";";
+        String query = "SELECT " + DataHelper.TOPIC_ID + "," + DataHelper.COLUMN_TOPIC + "," + DataHelper.SUBJECT_ID + "," +
+                DataHelper.GOAL_ID +
+                " FROM " + DataHelper.TABLE_TOPIC_DATA_MAP + " a " +
+                " INNER JOIN " + DataHelper.TABLE_TOPIC + " b on " +
+                "a." + DataHelper.TOPIC_ID + "=" +
+                "b." + DataHelper.COLUMN_TID +
+                " WHERE a." + DataHelper.GOAL_ID + "=" + goal_id +
+                ";";
 
         Cursor cursor = database.rawQuery(query, null);
 

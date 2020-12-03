@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import abheri.co.protracklite.utils.builders.Progress;
+import abheri.co.protracklite.utils.builders.ProgressDetails;
 import abheri.co.protracklite.utils.builders.Topic;
 
 public class ProgressDataHelper {
@@ -37,7 +38,7 @@ public class ProgressDataHelper {
         //dbHelper.close();
     }
 
-    public Progress createProgress( int progress, String progressDate, long tdataID) {
+    public Progress createProgress(int progress, String progressDate, long tdataID) {
         ContentValues values = new ContentValues();
         //values.put(DataHelper.COLUMN_PID, tid);
         values.put(DataHelper.COLUMN_PROGRESS, progress);
@@ -100,6 +101,53 @@ public class ProgressDataHelper {
         return progresses;
     }
 
+    public List<ProgressDetails> getProgressesByTopicID(long topic_ID) {
+        List<ProgressDetails> progressDetails = new ArrayList<ProgressDetails>();
+
+        String query = "SELECT " +  DataHelper.COLUMN_PROGRESS + "," + DataHelper.TOPICDATA_ID + "," +
+                DataHelper.COLUMN_DATE +
+                " FROM " + DataHelper.TABLE_PROGRESS  +
+                " WHERE " + DataHelper.TOPICDATA_ID + " in ( " +
+                "SELECT " +  DataHelper.COLUMN_TDMID + " FROM " + DataHelper.TABLE_TOPIC_DATA_MAP  +
+                " WHERE " + DataHelper.TOPIC_ID + "=" + topic_ID +
+                ");";
+        Cursor cursor = database.rawQuery(query, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            ProgressDetails progressDetail = cursorToTopicId(cursor, topic_ID);
+            progressDetails.add(progressDetail);
+            cursor.moveToNext();
+        }
+        // make sure to close the cursor
+        cursor.close();
+        return progressDetails;
+    }
+
+    public List<ProgressDetails> getProgressesByTopicID2(long topic_ID) {
+        List<ProgressDetails> progressDetails = new ArrayList<ProgressDetails>();
+
+        String query = "SELECT " + DataHelper.TOPIC_ID + "," + DataHelper.COLUMN_PROGRESS + "," + DataHelper.COLUMN_TDMID + "," +
+                DataHelper.COLUMN_DATE +
+                " FROM " + DataHelper.TABLE_PROGRESS + " a " +
+                " INNER JOIN " + DataHelper.TABLE_TOPIC_DATA_MAP + " b on " +
+                "a." + DataHelper.TOPICDATA_ID + "=" +
+                "b." + DataHelper.COLUMN_TDMID +
+                " WHERE b." + DataHelper.TOPIC_ID + "=" + topic_ID +
+                ";";
+        Cursor cursor = database.rawQuery(query, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            ProgressDetails progressDetail = cursorToTopicId(cursor, topic_ID);
+            progressDetails.add(progressDetail);
+            cursor.moveToNext();
+        }
+        // make sure to close the cursor
+        cursor.close();
+        return progressDetails;
+    }
+
     private Progress cursorToProgress(Cursor cursor) {
         Progress progress = new Progress();
         progress.setProgress_id(cursor.getLong(0));
@@ -108,5 +156,16 @@ public class ProgressDataHelper {
         progress.setTopicdata_id(cursor.getLong(3));
         return progress;
     }
+
+    private ProgressDetails cursorToTopicId(Cursor cursor, long topicID) {
+        ProgressDetails progressDetails = new ProgressDetails();
+        progressDetails.setId(topicID);
+        progressDetails.setProgress(cursor.getInt(0));
+        progressDetails.setMap_id(cursor.getLong(1));
+        progressDetails.setDate(cursor.getString(2));
+        return progressDetails;
+    }
 }
+
+//SELECT DataHelper.TOPIC_ID, DataHelper.COLUMN_PROGRESS, DataHelper.COLUMN_TDMID, DataHelper.COLUMN_DATE FROM DataHelper.TABLE_PROGRESS a INNER JOIN DataHelper.TABLE_TOPIC_DATA_MAP b on a. DataHelper.TOPICDATA_ID = b.  DataHelper.COLUMN_TDMID WHERE a. DataHelper.TOPIC_ID = topic_ID;
 
