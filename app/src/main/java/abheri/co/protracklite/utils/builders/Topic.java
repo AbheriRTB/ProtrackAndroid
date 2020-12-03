@@ -1,4 +1,4 @@
-package abheri.co.protracklite.utils.data;
+package abheri.co.protracklite.utils.builders;
 
 public class Topic {
     private long id, topicID;

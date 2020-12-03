@@ -17,7 +17,7 @@ import abheri.co.protracklite.utils.adaptors.SubjectAdaptor;
 import abheri.co.protracklite.utils.builders.Subject;
 import abheri.co.protracklite.utils.data.SubjectDataHelper;
 import abheri.co.protracklite.utils.builders.OldTopic;
-import abheri.co.protracklite.utils.data.Topic;
+import abheri.co.protracklite.utils.builders.Topic;
 import abheri.co.protracklite.utils.data.TopicDataHelper;
 
 public class SubjectActivity extends AppCompatActivity {

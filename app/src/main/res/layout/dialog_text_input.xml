@@ -9,8 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/victor_mono_regular"
-        android:text="Enter Topic Name"
-        android:textSize="18sp"
+        android:text="Enter Goal Name"
+        android:textSize="22sp"
         android:textStyle="bold" />
 
     <EditText
@@ -19,7 +19,16 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/victor_mono_regular"
+        android:fontFamily="@font/victor_mono_semi_bold_italic"
         android:hint="Name" />
+
+    <EditText
+        android:id="@+id/edit_username2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_username"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/victor_mono_semi_bold_italic"
+        android:hint="Discription" />
 
 </RelativeLayout>

@@ -14,7 +14,6 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.timepicker.MaterialTimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,7 +22,7 @@ import java.util.List;
 
 import abheri.co.protracklite.utils.builders.Goal;
 import abheri.co.protracklite.utils.data.GoalDataHelper;
-import abheri.co.protracklite.utils.data.Topic;
+import abheri.co.protracklite.utils.builders.Topic;
 import abheri.co.protracklite.utils.data.TopicDataHelper;
 import abheri.co.protracklite.utils.builders.TopicDataMap;
 import abheri.co.protracklite.utils.data.TopicMapDataHelper;
@@ -137,7 +136,7 @@ public class AddActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         startActivity(intent);
                     }
-                }).show();
+                }).setBackground(getResources().getDrawable(R.drawable.custom_dialog)).show();
 
             }
         });

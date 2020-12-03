@@ -34,9 +34,11 @@ public class DataHelper extends SQLiteOpenHelper {
     public static final String GOAL_ID = "goal_id";
 
 
-    public static final String TABLE_PROGRESS = "topic_data_map";
-    public static final String COLUMN_PROGRESS = "topic_map_id";
-    public static final String COLUMN_DATE = "topic_id";
+    public static final String TABLE_PROGRESS = "progress";
+    public static final String COLUMN_PROGRESS = "progress";
+    public static final String COLUMN_PID = "_id";
+    public static final String TOPICDATA_ID = "topic_map_id";
+    public static final String COLUMN_DATE = "date";
 
 
     private static final String DATABASE_NAME = "protrack.db";
@@ -65,7 +67,7 @@ public class DataHelper extends SQLiteOpenHelper {
 
     private static final String topic_table = "create table "
             + TABLE_TOPIC + "(" + COLUMN_TID
-            + " integer primary key, "
+            + " integer primary key AUTOINCREMENT, "
             + COLUMN_TOPIC
             + " text not null,"
             + COLUMN_TDISC
@@ -78,17 +80,18 @@ public class DataHelper extends SQLiteOpenHelper {
             + "(" + COLUMN_SID + "));";
 
     private static final String progress_table = "create table "
-            + TABLE_PROGRESS + "("
+            + TABLE_PROGRESS + "("+ COLUMN_PID
+            + " integer primary key AUTOINCREMENT, "
             + COLUMN_PROGRESS
             + " integer not null,"
             + COLUMN_DATE
             + " date not null,"
-            + TOPIC_ID
+            + TOPICDATA_ID
             + " integer,"
             + " foreign key( "
-            + TOPIC_ID + ") references "
-            + TABLE_TOPIC
-            + "(" + COLUMN_TID + "));";
+            + TOPICDATA_ID + ") references "
+            + TABLE_TOPIC_DATA_MAP
+            + "(" + COLUMN_TDMID + "));";
 
     private static final String topic_data_map_table = "create table "
             + TABLE_TOPIC_DATA_MAP + "("
@@ -122,6 +125,7 @@ public class DataHelper extends SQLiteOpenHelper {
         db.execSQL(topic_table);
         db.execSQL(goal_table);
         db.execSQL(topic_data_map_table);
+        db.execSQL(progress_table);
     }
 
     @Override

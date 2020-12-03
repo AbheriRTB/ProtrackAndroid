@@ -19,15 +19,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvDiscriptionDialog"
+<!--    <TextView
+        android:id="@+id/tvDescriptionDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/victor_mono_italic"
-        android:text="Topic Discription"
+        android:text="Topic Description"
         app:layout_constraintStart_toStartOf="@+id/tvTopicDialog"
-        app:layout_constraintTop_toBottomOf="@+id/tvSubjectDialog" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSubjectDialog" />-->
 
     <TextView
         android:id="@+id/tvSubjectDialog"
@@ -41,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvTopicDialog" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/tvProgressDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -49,6 +49,6 @@
         android:text="100%"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/tvTopicDialog"
-        app:layout_constraintTop_toBottomOf="@+id/tvDiscriptionDialog" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSubjectDialog" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

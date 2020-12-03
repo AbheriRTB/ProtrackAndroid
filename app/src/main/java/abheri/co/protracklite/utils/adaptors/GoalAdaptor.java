@@ -46,7 +46,7 @@ public class GoalAdaptor extends RecyclerView.Adapter<GoalAdaptor.ViewHolder> {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvTitle = itemView.findViewById(R.id.tvTopicTitle);
+            tvTitle = itemView.findViewById(R.id.tvGoalTitle);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -65,7 +65,7 @@ public class GoalAdaptor extends RecyclerView.Adapter<GoalAdaptor.ViewHolder> {
     @Override
     public GoalAdaptor.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.listview, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.goal_list, parent, false);
         return new ViewHolder(v);
     }
 

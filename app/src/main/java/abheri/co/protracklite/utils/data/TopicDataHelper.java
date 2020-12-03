@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import abheri.co.protracklite.utils.builders.Topic;
+
 public class TopicDataHelper {
 
     private SQLiteDatabase database;
@@ -34,15 +36,15 @@ public class TopicDataHelper {
         //dbHelper.close();
     }
 
-    public Topic createTopic(int tid, String topic, String topicDisc, int subjID) {
+    public Topic createTopic(String topic, String topicDisc, int subjID) {
         ContentValues values = new ContentValues();
-        values.put(DataHelper.COLUMN_TID, tid);
+        //values.put(DataHelper.COLUMN_TID, tid);
         values.put(DataHelper.COLUMN_TOPIC, topic);
         values.put(DataHelper.COLUMN_TDISC, topicDisc);
         values.put(DataHelper.SUBJECT_ID, subjID);
         long insertId = database.insert(DataHelper.TABLE_TOPIC, null, values);
         Cursor cursor = database.query(DataHelper.TABLE_TOPIC,
-                allColumns, DataHelper.COLUMN_TID + " = " + tid, null,
+                allColumns, DataHelper.COLUMN_TID + " = " + insertId, null,
                 null, null, null);
         cursor.moveToFirst();
         Topic newTopic = cursorToTopic(cursor);

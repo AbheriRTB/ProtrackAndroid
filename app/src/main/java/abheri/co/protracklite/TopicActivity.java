@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 
 import java.util.List;
 
-import abheri.co.protracklite.utils.data.Topic;
+import abheri.co.protracklite.utils.builders.Topic;
 import abheri.co.protracklite.utils.adaptors.TopicAdaptor;
 import abheri.co.protracklite.utils.data.TopicDataHelper;
 
@@ -39,7 +39,7 @@ public class TopicActivity extends AppCompatActivity {
         id_goal = getIntent().getLongExtra("goal_id", 0);
 
         LayoutInflater inflater = TopicActivity.this.getLayoutInflater();
-        myAdaptor = new TopicAdaptor(this, topics, recyclerView, id_goal);
+        myAdaptor = new TopicAdaptor(this, topics, recyclerView, id_goal, inflater);
         recyclerView.setAdapter(myAdaptor);
 
 

@@ -18,7 +18,7 @@ import java.util.List;
 
 import abheri.co.protracklite.R;
 import abheri.co.protracklite.utils.builders.Subject;
-import abheri.co.protracklite.utils.data.Topic;
+import abheri.co.protracklite.utils.builders.Topic;
 
 
 public class SubjectAdaptor extends RecyclerView.Adapter<SubjectAdaptor.ViewHolder> {
@@ -49,7 +49,7 @@ public class SubjectAdaptor extends RecyclerView.Adapter<SubjectAdaptor.ViewHold
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvTitle = itemView.findViewById(R.id.tvTopicTitle);
+            tvTitle = itemView.findViewById(R.id.tvGoalTitle);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -1,7 +1,7 @@
 package abheri.co.protracklite.utils.adaptors;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +12,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.slider.Slider;
 
+import java.util.Calendar;
 import java.util.List;
 
 import abheri.co.protracklite.R;
 import abheri.co.protracklite.utils.builders.GoalDetails;
+import abheri.co.protracklite.utils.builders.Progress;
 import abheri.co.protracklite.utils.builders.Subject;
 import abheri.co.protracklite.utils.builders.TopicDataMap;
+import abheri.co.protracklite.utils.data.ProgressDataHelper;
 import abheri.co.protracklite.utils.data.SubjectDataHelper;
-import abheri.co.protracklite.utils.data.Topic;
-import abheri.co.protracklite.utils.data.TopicDataHelper;
+import abheri.co.protracklite.utils.builders.Topic;
 import abheri.co.protracklite.utils.data.TopicMapDataHelper;
 
 
@@ -30,25 +33,27 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
     private List<Topic> topics;
     TopicMapDataHelper tmdh;
     SubjectDataHelper sdh;
-    MaterialAlertDialogBuilder dialogBuilder;
-    Drawable backgroundDialog;
+    MaterialAlertDialogBuilder statusDialog, progressDialog;
     LayoutInflater inflater;
     Context thisContext;
     RecyclerView recyclerView;
     Button btn;
-    TextView tvTopic, tvProgress, tvSubject;
+    TextView tvTopic, tvProgressDialog, tvSubject, tvTopicDialog, tvSubjectDialog, tvDescriptionDialog;
     long goal_id;
     List<TopicDataMap> tdm;
     List<GoalDetails> gd;
     List<Subject> allSubjects;
+    ProgressDataHelper pdh;
+    List<Progress> ps;
+    Slider slider;
 
 
-
-    public TopicAdaptor(Context context, List<Topic> list, RecyclerView recyclerViewForDialog, long id_goal) {
+    public TopicAdaptor(Context context, List<Topic> list, RecyclerView recyclerViewForDialog, long id_goal, LayoutInflater inflater1) {
         topics = list;
         thisContext = context;
         recyclerView = recyclerViewForDialog;
         tmdh = new TopicMapDataHelper(context);
+        pdh = new ProgressDataHelper(context);
 
         goal_id = id_goal;
         gd = tmdh.getTopicsForGoal(goal_id);
@@ -56,6 +61,14 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
         sdh = new SubjectDataHelper(context);
         allSubjects = sdh.getAllSubjects();
         updateSubjectInfo();
+        ps = pdh.getAllProgresses();
+
+
+        statusDialog = new MaterialAlertDialogBuilder(context);
+        progressDialog = new MaterialAlertDialogBuilder(context);
+        statusDialog.setBackground(context.getDrawable(R.drawable.custom_dialog));
+        progressDialog.setBackground(context.getDrawable(R.drawable.custom_dialog));
+        inflater = inflater1;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -64,15 +77,28 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvTopic = itemView.findViewById(R.id.tvTopicTitle);
+            tvTopicDialog = itemView.findViewById(R.id.tvTopicDialog);
+            tvTopic = itemView.findViewById(R.id.tvGoalTitle);
             tvSubject = itemView.findViewById(R.id.tvSubject);
             tvProgress = itemView.findViewById(R.id.tvProgress);
+            View view = inflater.inflate(R.layout.dialog_status, null);
+
+            tvTopicDialog = view.findViewById(R.id.tvTopicDialog);
+            tvSubjectDialog = view.findViewById(R.id.tvSubjectDialog);
+            //tvDescriptionDialog = view.findViewById(R.id.tvDescriptionDialog);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     final int i = recyclerView.getChildLayoutPosition(v);
+
+                    //dialogBuilder.setView(view);
+                    tvTopicDialog.setText(gd.get(i).getTopic_name());
+                    tvSubjectDialog.setText(gd.get(i).getSubject_name());
+                    StatusDialog(i);
                 }
             });
+
 
         }
     }
@@ -81,7 +107,7 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
     @Override
     public TopicAdaptor.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.goals, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.topic_list, parent, false);
         return new ViewHolder(v);
     }
 
@@ -92,6 +118,7 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
         holder.itemView.setTag(gd.get(i));
         holder.tvTopic.setText(gd.get(i).getTopic_name());
         holder.tvSubject.setText(gd.get(i).getSubject_name());
+        holder.tvProgress.setText(ps.get(i).getProgress() + "%");
     }
 
     @Override
@@ -99,15 +126,62 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
         return gd.size();
     }
 
-    private void updateSubjectInfo(){
-        for(int i=0; i<gd.size(); ++i){
-            for(int j=0; j<allSubjects.size(); ++j){
-                if(gd.get(i).getSubject_id() == allSubjects.get(j).getId()){
+    private void updateSubjectInfo() {
+        for (int i = 0; i < gd.size(); ++i) {
+            for (int j = 0; j < allSubjects.size(); ++j) {
+                if (gd.get(i).getSubject_id() == allSubjects.get(j).getId()) {
                     gd.get(i).setSubject_name(allSubjects.get(j).getName());
                     break;
                 }
             }
         }
+    }
+
+    private void StatusDialog(int i) {
+        View view = inflater.inflate(R.layout.dialog_status, null);
+        statusDialog.setView(view);
+
+        tvTopic = view.findViewById(R.id.tvTopicDialog);
+        tvSubjectDialog = view.findViewById(R.id.tvSubjectDialog);
+        //tvDescriptionDialog = view.findViewById(R.id.tvDescriptionDialog);
+        tvProgressDialog = view.findViewById(R.id.tvProgressDialog);
+        tvTopic.setText(gd.get(i).getTopic_name());
+        tvSubjectDialog.setText(gd.get(i).getSubject_name());
+        //tvDescriptionDialog.setText(gd.get(i).getGoal_description());
+        int progress = 0;
+        progress = ps.get(i).getProgress();
+        tvProgressDialog.setText(progress + "%");
+        /*statusDialog.setTitle(gd.get(i).getTopic_name())
+                .setMessage("This is " + gd.get(i).getTopic_name() + " of " + gd.get(i).getSubject_name() );*/
+        statusDialog.setNeutralButton("Edit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                View view2 = inflater.inflate(R.layout.dialog_progress_track, null);
+
+                slider = view2.findViewById(R.id.seekBar);
+
+                int value = 0;
+                value = ps.get(i).getProgress();
+                slider.setValue(value);
+
+                progressDialog.setView(view2)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                int progress;
+                                progress = (int) slider.getValue();
+                                Calendar calendar = Calendar.getInstance();
+                                String time = calendar.get(Calendar.DATE) + "/" + calendar.get(Calendar.MONTH) + "/"
+                                        + calendar.get(Calendar.YEAR);
+                                pdh.createProgress(progress, time, ps.get(i).getTopicdata_id());
+                            }
+                        })
+                        .setNegativeButton("Cancel", null).show();
+            }
+        })
+                .setPositiveButton("OK", null)
+                .setNegativeButton("Cancel", null);//.show();
+        statusDialog.show();
     }
 
 

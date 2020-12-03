@@ -2,8 +2,6 @@ package abheri.co.protracklite.utils.builders;
 
 import java.util.List;
 
-import abheri.co.protracklite.utils.data.Topic;
-
 public class Subject {
     private long id;
     private String Name, Description;

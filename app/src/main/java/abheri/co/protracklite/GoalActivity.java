@@ -17,7 +17,7 @@ import java.util.List;
 import abheri.co.protracklite.utils.builders.Goal;
 import abheri.co.protracklite.utils.adaptors.GoalAdaptor;
 import abheri.co.protracklite.utils.data.GoalDataHelper;
-import abheri.co.protracklite.utils.data.Topic;
+import abheri.co.protracklite.utils.builders.Topic;
 import abheri.co.protracklite.utils.data.TopicDataHelper;
 
 public class GoalActivity extends AppCompatActivity {
@@ -60,7 +60,8 @@ public class GoalActivity extends AppCompatActivity {
         fabAddGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(GoalActivity.this, AddActivity.class));
+                Intent intent = new Intent(GoalActivity.this, AddActivity.class);
+                startActivity(intent);
             }
         });
 
