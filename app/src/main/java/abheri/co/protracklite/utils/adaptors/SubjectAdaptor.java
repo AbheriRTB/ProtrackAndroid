@@ -49,7 +49,7 @@ public class SubjectAdaptor extends RecyclerView.Adapter<SubjectAdaptor.ViewHold
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvTitle = itemView.findViewById(R.id.tvGoalTitle);
+            tvTitle = itemView.findViewById(R.id.tvChoiceTitle);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

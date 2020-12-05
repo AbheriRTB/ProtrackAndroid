@@ -28,6 +28,7 @@ import abheri.co.protracklite.utils.data.ProgressDataHelper;
 import abheri.co.protracklite.utils.data.TopicDataHelper;
 import abheri.co.protracklite.utils.builders.TopicDataMap;
 import abheri.co.protracklite.utils.data.TopicMapDataHelper;
+import abheri.co.protracklite.utils.utilites.ChoiceActivity;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -37,7 +38,7 @@ public class AddActivity extends AppCompatActivity {
     EditText etName, etDescription;
     String[] listItems;
     List<Topic> topics;
-    CharSequence[] cs = null;
+    CharSequence[] cs = null, idCS = null;
     String goalName, goalDescription, endDate;
     ArrayList<Integer> dataMaps;
     boolean[] checkedItems;
@@ -101,6 +102,8 @@ public class AddActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getTopicTitles();
+
                 // Create New Goal
                 Goal newGoal = gdc.createGoal(etName.getText().toString(), etDescription.getText().toString(), endDate);
 
@@ -111,7 +114,6 @@ public class AddActivity extends AppCompatActivity {
                 // Topic Map Dialog
                 MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(AddActivity.this);
                 dialogBuilder.setTitle("Enter topics");
-                cs = getTopicTitles();
                 checkedItems = new boolean[cs.length];
                 for (int i = 0; i < cs.length; ++i)
                     checkedItems[i] = false;
@@ -128,7 +130,7 @@ public class AddActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
                         for (int i = 0; i < dataMaps.size(); i++) {
-                            topic_id = dataMaps.get(i);
+                            topic_id = dataMaps.get(i)+1;
                             //tdc.deleteTopicDataMap();
                             tdc.createTopicDataMap(topic_id, newGoal.getId());
                             Calendar calendar = Calendar.getInstance();
@@ -145,22 +147,25 @@ public class AddActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 }).setBackground(getResources().getDrawable(R.drawable.custom_dialog)).show();
+                //startActivity(new Intent(AddActivity.this, ChoiceActivity.class));
 
             }
         });
 
     }
 
-    private CharSequence[] getTopicTitles() {
+    private void getTopicTitles() {
         ArrayList<String> csl = new ArrayList<String>();
+        ArrayList<Long> idSL = new ArrayList<Long>();
         TopicDataHelper tdh = new TopicDataHelper(AddActivity.this);
         List<Topic> lt = tdh.getAllTopics();
         if (lt != null && lt.size() > 0) {
             for (int i = 0; i < lt.size(); ++i) {
                 csl.add(lt.get(i).getName());
+                idSL.add(lt.get(i).getTopicID());
             }
             cs = csl.toArray(new CharSequence[lt.size()]);
+            idCS = csl.toArray(new CharSequence[lt.size()]);
         }
-        return cs;
     }
 }

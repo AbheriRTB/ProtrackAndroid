@@ -11,13 +11,13 @@ import java.util.List;
 
 import abheri.co.protracklite.utils.builders.Progress;
 import abheri.co.protracklite.utils.builders.ProgressDetails;
-import abheri.co.protracklite.utils.builders.Topic;
+import abheri.co.protracklite.utils.builders.ProgressGoalDetails;
 
 public class ProgressDataHelper {
 
     private SQLiteDatabase database;
-    private DataHelper dbHelper;
-    private String[] allColumns = {DataHelper.COLUMN_PID,
+    private final DataHelper dbHelper;
+    private final String[] allColumns = {DataHelper.COLUMN_PID,
             DataHelper.COLUMN_PROGRESS, DataHelper.COLUMN_DATE, DataHelper.TOPICDATA_ID};
 
     public ProgressDataHelper(Context context) {
@@ -104,11 +104,11 @@ public class ProgressDataHelper {
     public List<ProgressDetails> getProgressesByTopicID(long topic_ID) {
         List<ProgressDetails> progressDetails = new ArrayList<ProgressDetails>();
 
-        String query = "SELECT " +  DataHelper.COLUMN_PROGRESS + "," + DataHelper.TOPICDATA_ID + "," +
+        String query = "SELECT " + DataHelper.COLUMN_PROGRESS + "," + DataHelper.TOPICDATA_ID + "," +
                 DataHelper.COLUMN_DATE +
-                " FROM " + DataHelper.TABLE_PROGRESS  +
+                " FROM " + DataHelper.TABLE_PROGRESS +
                 " WHERE " + DataHelper.TOPICDATA_ID + " in ( " +
-                "SELECT " +  DataHelper.COLUMN_TDMID + " FROM " + DataHelper.TABLE_TOPIC_DATA_MAP  +
+                "SELECT " + DataHelper.COLUMN_TDMID + " FROM " + DataHelper.TABLE_TOPIC_DATA_MAP +
                 " WHERE " + DataHelper.TOPIC_ID + "=" + topic_ID +
                 ");";
         Cursor cursor = database.rawQuery(query, null);
@@ -124,23 +124,23 @@ public class ProgressDataHelper {
         return progressDetails;
     }
 
-    public List<ProgressDetails> getProgressesByTopicID2(long topic_ID) {
-        List<ProgressDetails> progressDetails = new ArrayList<ProgressDetails>();
+    public List<ProgressGoalDetails> getProgressesByGoal(long goal_ID) {
+        List<ProgressGoalDetails> progressDetails = new ArrayList<ProgressGoalDetails>();
 
-        String query = "SELECT " + DataHelper.TOPIC_ID + "," + DataHelper.COLUMN_PROGRESS + "," + DataHelper.COLUMN_TDMID + "," +
+        String query = "SELECT " + DataHelper.GOAL_ID + "," + DataHelper.COLUMN_PROGRESS + "," + DataHelper.COLUMN_TDMID + "," +
                 DataHelper.COLUMN_DATE +
                 " FROM " + DataHelper.TABLE_PROGRESS + " a " +
                 " INNER JOIN " + DataHelper.TABLE_TOPIC_DATA_MAP + " b on " +
                 "a." + DataHelper.TOPICDATA_ID + "=" +
                 "b." + DataHelper.COLUMN_TDMID +
-                " WHERE b." + DataHelper.TOPIC_ID + "=" + topic_ID +
+                " WHERE b." + DataHelper.GOAL_ID + "=" + goal_ID +
                 ";";
         Cursor cursor = database.rawQuery(query, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            ProgressDetails progressDetail = cursorToTopicId(cursor, topic_ID);
-            progressDetails.add(progressDetail);
+            ProgressGoalDetails progressGoalDetail = cursorToGoal(cursor, goal_ID);
+            progressDetails.add(progressGoalDetail);
             cursor.moveToNext();
         }
         // make sure to close the cursor
@@ -165,7 +165,13 @@ public class ProgressDataHelper {
         progressDetails.setDate(cursor.getString(2));
         return progressDetails;
     }
+
+    private ProgressGoalDetails cursorToGoal(Cursor cursor, long goalID) {
+        ProgressGoalDetails progressGoalDetails = new ProgressGoalDetails();
+        progressGoalDetails.setGoalID(goalID);
+        progressGoalDetails.setProgress(cursor.getInt(0));
+        progressGoalDetails.setMapID(cursor.getLong(1));
+        progressGoalDetails.setDate(cursor.getString(2));
+        return progressGoalDetails;
+    }
 }
-
-//SELECT DataHelper.TOPIC_ID, DataHelper.COLUMN_PROGRESS, DataHelper.COLUMN_TDMID, DataHelper.COLUMN_DATE FROM DataHelper.TABLE_PROGRESS a INNER JOIN DataHelper.TABLE_TOPIC_DATA_MAP b on a. DataHelper.TOPICDATA_ID = b.  DataHelper.COLUMN_TDMID WHERE a. DataHelper.TOPIC_ID = topic_ID;
-

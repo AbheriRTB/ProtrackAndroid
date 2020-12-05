@@ -2,6 +2,7 @@ package abheri.co.protracklite.utils.adaptors;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,6 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
     LayoutInflater inflater;
     Context thisContext;
     RecyclerView recyclerView;
-    Button btn;
     TextView tvTopic, tvProgressDialog, tvSubject, tvTopicDialog, tvSubjectDialog, tvDescriptionDialog;
     long goal_id;
     List<TopicDataMap> tdm;
@@ -50,7 +50,8 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
     Slider slider;
 
 
-    public TopicAdaptor(Context context, List<Topic> list, RecyclerView recyclerViewForDialog, long id_goal, LayoutInflater inflater1) {
+    public TopicAdaptor(Context context, List<Topic> list, RecyclerView recyclerViewForDialog, long id_goal,
+                        LayoutInflater inflater1) {
         topics = list;
         thisContext = context;
         recyclerView = recyclerViewForDialog;
@@ -59,6 +60,7 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
 
         goal_id = id_goal;
         gd = tmdh.getTopicsForGoal(goal_id);
+        tdm = tmdh.getAllTopicDataMaps();
 
 
         sdh = new SubjectDataHelper(context);
@@ -82,8 +84,8 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
 
 
             tvTopicDialog = itemView.findViewById(R.id.tvTopicDialog);
-            tvTopic = itemView.findViewById(R.id.tvGoalTitle);
-            tvSubject = itemView.findViewById(R.id.tvSubject);
+            tvTopic = itemView.findViewById(R.id.tvChoiceTitle);
+            tvSubject = itemView.findViewById(R.id.tvChoiceSubject);
             tvProgress = itemView.findViewById(R.id.tvProgress);
             View view = inflater.inflate(R.layout.dialog_status, null);
 
@@ -149,7 +151,7 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
         View view = inflater.inflate(R.layout.dialog_status, null);
         statusDialog.setView(view);
 
-        progressDetails = pdh.getProgressesByTopicID(ps.get(i).getTopicdata_id());
+        progressDetails = pdh.getProgressesByTopicID(gd.get(i).getTopic_id());
 
         tvTopic = view.findViewById(R.id.tvTopicDialog);
         tvSubjectDialog = view.findViewById(R.id.tvSubjectDialog);
@@ -172,8 +174,7 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
 
                 slider = view2.findViewById(R.id.seekBar);
 
-                int value = 0;
-                value = ps.get(i).getProgress();
+                int value = progressDetails.get(progressDetails.size() - 1).getProgress();
                 slider.setValue(value);
 
                 progressDialog.setView(view2)
@@ -186,6 +187,8 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
                                 String time = calendar.get(Calendar.DATE) + "/" + calendar.get(Calendar.MONTH) + "/"
                                         + calendar.get(Calendar.YEAR);
                                 pdh.createProgress(progress, time, ps.get(i).getTopicdata_id());
+                                notifyDataSetChanged();
+
                             }
                         })
                         .setNegativeButton("Cancel", null).show();

@@ -7,29 +7,29 @@
 
 
     <TextView
-        android:id="@+id/tvGoalTitle"
+        android:id="@+id/tvChoiceTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/victor_mono_semi_bold_italic"
+        android:paddingRight="78dp"
         android:text="TextView"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvSubject"
+        android:id="@+id/tvChoiceSubject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:fontFamily="@font/victor_mono_semi_bold_italic"
+        android:paddingRight="16dp"
         android:text="TextView"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvGoalTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvChoiceTitle" />
 
     <TextView
         android:id="@+id/tvProgress"
@@ -56,5 +56,5 @@
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSubject" />
+        app:layout_constraintTop_toBottomOf="@+id/tvChoiceSubject" />
 </androidx.constraintlayout.widget.ConstraintLayout>

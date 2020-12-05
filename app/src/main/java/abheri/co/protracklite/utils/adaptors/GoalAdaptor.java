@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,34 +20,44 @@ import java.util.List;
 import abheri.co.protracklite.R;
 import abheri.co.protracklite.TopicActivity;
 import abheri.co.protracklite.utils.builders.Goal;
+import abheri.co.protracklite.utils.builders.Progress;
+import abheri.co.protracklite.utils.builders.ProgressGoalDetails;
+import abheri.co.protracklite.utils.data.ProgressDataHelper;
 
 
 public class GoalAdaptor extends RecyclerView.Adapter<GoalAdaptor.ViewHolder> {
 
     private List<Goal> goal;
+    int totalProgress;
     MaterialAlertDialogBuilder dialogBuilder;
     Drawable backgroundDialog;
+    ProgressDataHelper pdh;
     LayoutInflater inflater;
     Context thisContext;
     RecyclerView recyclerView;
     Button btn;
     Intent intent;
+    List<Progress> ps;
+    List<ProgressGoalDetails> pgd;
 
 
     public GoalAdaptor(Context context, List<Goal> list, RecyclerView recyclerViewOnClick) {
         goal = list;
         thisContext = context;
         recyclerView = recyclerViewOnClick;
+        pdh = new ProgressDataHelper(context);
+        ps = pdh.getAllProgresses();
 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTitle;
+        TextView tvTitle, tvProgress;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvTitle = itemView.findViewById(R.id.tvGoalTitle);
+            tvTitle = itemView.findViewById(R.id.tvChoiceTitle);
+            tvProgress = itemView.findViewById(R.id.tvProgressGoal);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -71,8 +82,11 @@ public class GoalAdaptor extends RecyclerView.Adapter<GoalAdaptor.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull GoalAdaptor.ViewHolder holder, int i) {
+        getProgress(goal.get(i).getId());
         holder.itemView.setTag(goal.get(i));
         holder.tvTitle.setText(goal.get(i).getName());
+        holder.tvProgress.setText(totalProgress+"%");
+
     }
 
     @Override
@@ -80,5 +94,12 @@ public class GoalAdaptor extends RecyclerView.Adapter<GoalAdaptor.ViewHolder> {
         return goal.size();
     }
 
-
+    private void getProgress(long goalID) {
+        pgd = pdh.getProgressesByGoal(goalID);
+        int prog = 0;
+        for (int i = 0; i < pgd.size(); ++i) {
+            prog = prog + pgd.get(i).getProgress();
+        }
+        totalProgress = prog/pgd.size();
+    }
 }

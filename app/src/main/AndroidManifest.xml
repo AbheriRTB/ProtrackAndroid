@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProtrackLite">
-        <activity android:name=".TopicActivity"></activity>
+        <activity android:name=".utils.utilites.ChoiceActivity"></activity>
+        <activity android:name=".TopicActivity" />
         <activity android:name=".GoalActivity" />
         <activity
             android:name=".AddActivity"
