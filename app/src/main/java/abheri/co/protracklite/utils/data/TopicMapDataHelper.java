@@ -16,7 +16,7 @@ import abheri.co.protracklite.utils.builders.TopicDataMap;
 public class TopicMapDataHelper {
     private SQLiteDatabase database;
     private DataHelper dbHelper;
-    private String[] allColumns = {DataHelper.COLUMN_TDMID, DataHelper.TOPIC_ID, DataHelper.GOAL_ID};
+    private String[] allColumns = {DataHelper.COLUMN_MAP_ID, DataHelper.TOPIC_ID, DataHelper.GOAL_ID};
 
     public TopicMapDataHelper(Context context) {
 
@@ -37,15 +37,15 @@ public class TopicMapDataHelper {
         //dbHelper.close();
     }
 
-    public TopicDataMap createTopicDataMap(int topic_id, long goal_id) {
+    public TopicDataMap createTopicDataMap(long topic_id, long goal_id) {
         ContentValues values = new ContentValues();
         values.put(DataHelper.GOAL_ID, goal_id);
         values.put(DataHelper.TOPIC_ID, topic_id);
 
         long insertId = database.insert(DataHelper.TABLE_TOPIC_DATA_MAP, null, values);
-        values.put(DataHelper.COLUMN_TDMID, insertId);
+        values.put(DataHelper.COLUMN_MAP_ID, insertId);
         Cursor cursor = database.query(DataHelper.TABLE_TOPIC_DATA_MAP,
-                allColumns, DataHelper.COLUMN_TDMID + " = " + insertId, null,
+                allColumns, DataHelper.COLUMN_MAP_ID + " = " + insertId, null,
                 null, null, null);
         cursor.moveToFirst();
         TopicDataMap newTopicDataMap = cursorToTopicDataMap(cursor);
@@ -87,7 +87,7 @@ public class TopicMapDataHelper {
     public List<TopicDataMap> getTopicDataMaps(long goal_id) {
         List<TopicDataMap> topicDataMaps = new ArrayList<TopicDataMap>();
 
-        String query = "SELECT * FROM " + DataHelper.TABLE_TOPIC_DATA_MAP + " WHERE " + DataHelper.COLUMN_GID + "=" + goal_id + ";";
+        String query = "SELECT * FROM " + DataHelper.TABLE_TOPIC_DATA_MAP + " WHERE " + DataHelper.COLUMN_GOAL_ID + "=" + goal_id + ";";
 
         Cursor cursor = database.rawQuery(query, null);
 
@@ -110,7 +110,7 @@ public class TopicMapDataHelper {
                 " FROM " + DataHelper.TABLE_TOPIC_DATA_MAP + " a " +
                 " INNER JOIN " + DataHelper.TABLE_TOPIC + " b on " +
                 "a." + DataHelper.TOPIC_ID + "=" +
-                "b." + DataHelper.COLUMN_TID +
+                "b." + DataHelper.COLUMN_TOPIC_ID +
                 " WHERE a." + DataHelper.GOAL_ID + "=" + goal_id +
                 ";";
 

@@ -9,35 +9,36 @@ public class DataHelper extends SQLiteOpenHelper {
     String SubjectName = "Subject";
     String TopicName = "Topic";
 
-    public static final String TABLE_SUBJECT = "subject";
-    public static final String COLUMN_SID = "_id";
+    public static final String TABLE_SUBJECT = "subjects";
+    public static final String COLUMN_SUBJECT_ID = "_id";
     public static final String COLUMN_SUBJECT = "subject";
-    public static final String COLUMN_SUBDISC = "description";
+    public static final String COLUMN_SUBJECT_DESCRIPTION = "subject_description";
 
 
-    public static final String TABLE_TOPIC = "topic";
-    public static final String COLUMN_TID = "_id";
+    public static final String TABLE_TOPIC = "topics";
+    public static final String COLUMN_TOPIC_ID = "_id";
     public static final String COLUMN_TOPIC = "topic";
-    public static final String SUBJECT_ID = "_sid";
-    public static final String COLUMN_TDISC = "description";
+    public static final String SUBJECT_ID = "subject_id";
+    public static final String COLUMN_TOPIC_DESCRIPTION = "topic_description";
 
 
-    public static final String TABLE_GOAL = "goal";
-    public static final String COLUMN_GID = "_id";
+    public static final String TABLE_GOAL = "goals";
+    public static final String COLUMN_GOAL_ID = "_id";
     public static final String COLUMN_GOAL = "goal";
-    public static final String COLUMN_ENDDATE = "end_date";
-    public static final String COLUMN_GDISC = "description";
+    public static final String COLUMN_END_DATE = "end_date";
+    public static final String COLUMN_GOAL_DESCRIPTION = "description";
 
-    public static final String TABLE_TOPIC_DATA_MAP = "topic_data_map";
-    public static final String COLUMN_TDMID = "topic_map_id";
+    public static final String TABLE_TOPIC_DATA_MAP = "topic_data_maps";
+    public static final String COLUMN_MAP_ID = "topic_map_id";
     public static final String TOPIC_ID = "topic_id";
     public static final String GOAL_ID = "goal_id";
 
 
-    public static final String TABLE_PROGRESS = "progress";
+    public static final String TABLE_PROGRESS = "progresses";
     public static final String COLUMN_PROGRESS = "progress";
-    public static final String COLUMN_PID = "_id";
-    public static final String TOPICDATA_ID = "topic_map_id_fk";
+    public static final String COLUMN_PROGRESS_ID = "_id";
+    public static final String MAP_ID = "map_id";
+    public static final String IS_LATEST = "is_latest";
     public static final String COLUMN_DATE = "date";
 
 
@@ -47,55 +48,57 @@ public class DataHelper extends SQLiteOpenHelper {
 
 
     private static final String subject_table = "create table "
-            + TABLE_SUBJECT + "(" + COLUMN_SID
+            + TABLE_SUBJECT + "(" + COLUMN_SUBJECT_ID
             + " integer primary key, "
             + COLUMN_SUBJECT
             + " text not null,"
-            + COLUMN_SUBDISC
+            + COLUMN_SUBJECT_DESCRIPTION
             + " text not null);";
 
 
     private static final String goal_table = "create table "
-            + TABLE_GOAL + "(" + COLUMN_GID
+            + TABLE_GOAL + "(" + COLUMN_GOAL_ID
             + " integer primary key AUTOINCREMENT, "
             + COLUMN_GOAL
             + " text not null,"
-            + COLUMN_ENDDATE
+            + COLUMN_END_DATE
             + " date not null,"
-            + COLUMN_GDISC
+            + COLUMN_GOAL_DESCRIPTION
             + " text not null);";
 
     private static final String topic_table = "create table "
-            + TABLE_TOPIC + "(" + COLUMN_TID
+            + TABLE_TOPIC + "(" + COLUMN_TOPIC_ID
             + " integer primary key AUTOINCREMENT, "
             + COLUMN_TOPIC
             + " text not null,"
-            + COLUMN_TDISC
+            + COLUMN_TOPIC_DESCRIPTION
             + " text not null,"
             + SUBJECT_ID
             + " integer,"
             + " foreign key( "
             + SUBJECT_ID + ") references "
             + TABLE_SUBJECT
-            + "(" + COLUMN_SID + "));";
+            + "(" + COLUMN_SUBJECT_ID + "));";
 
     private static final String progress_table = "create table "
-            + TABLE_PROGRESS + "("+ COLUMN_PID
+            + TABLE_PROGRESS + "("+ COLUMN_PROGRESS_ID
             + " integer primary key AUTOINCREMENT, "
             + COLUMN_PROGRESS
             + " integer not null,"
             + COLUMN_DATE
             + " date not null,"
-            + TOPICDATA_ID
-            + " integer,"
+            + MAP_ID
+            + " integer not null,"
+            + IS_LATEST
+            + " integer not null,"
             + " foreign key( "
-            + TOPICDATA_ID + ") references "
+            + MAP_ID + ") references "
             + TABLE_TOPIC_DATA_MAP
-            + "(" + COLUMN_TDMID + "));";
+            + "(" + COLUMN_MAP_ID + "));";
 
     private static final String topic_data_map_table = "create table "
             + TABLE_TOPIC_DATA_MAP + "("
-            + COLUMN_TDMID
+            + COLUMN_MAP_ID
             + " integer primary key AUTOINCREMENT, "
             + GOAL_ID
             + " integer not null,"
@@ -104,11 +107,11 @@ public class DataHelper extends SQLiteOpenHelper {
             + " foreign key( "
             + GOAL_ID + ") references "
             + TABLE_GOAL
-            + "(" + COLUMN_GID + "),"
+            + "(" + COLUMN_GOAL_ID + "),"
             + " foreign key( "
             + TOPIC_ID + ") references "
             + TABLE_TOPIC
-            + "(" + COLUMN_TID + "));";
+            + "(" + COLUMN_TOPIC_ID + "));";
 
 
     private Context dbContext;

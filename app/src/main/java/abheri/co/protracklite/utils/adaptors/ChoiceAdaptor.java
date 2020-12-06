@@ -4,26 +4,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.slider.Slider;
-
 import java.util.List;
 
 import abheri.co.protracklite.R;
-import abheri.co.protracklite.utils.builders.GoalDetails;
-import abheri.co.protracklite.utils.builders.Progress;
-import abheri.co.protracklite.utils.builders.ProgressDetails;
-import abheri.co.protracklite.utils.builders.Subject;
 import abheri.co.protracklite.utils.builders.Topic;
-import abheri.co.protracklite.utils.builders.TopicDataMap;
-import abheri.co.protracklite.utils.data.ProgressDataHelper;
-import abheri.co.protracklite.utils.data.SubjectDataHelper;
 import abheri.co.protracklite.utils.data.TopicMapDataHelper;
 
 
@@ -49,7 +38,7 @@ public class ChoiceAdaptor extends RecyclerView.Adapter<ChoiceAdaptor.ViewHolder
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvTopic = itemView.findViewById(R.id.tvChoiceTitle);
+            tvTopic = itemView.findViewById(R.id.tvGoalDashboard);
             tvSubject = itemView.findViewById(R.id.tvChoiceSubject);
             cbChoice = itemView.findViewById(R.id.cbChoice);
 

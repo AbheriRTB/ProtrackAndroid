@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -56,7 +55,7 @@ public class GoalAdaptor extends RecyclerView.Adapter<GoalAdaptor.ViewHolder> {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvTitle = itemView.findViewById(R.id.tvChoiceTitle);
+            tvTitle = itemView.findViewById(R.id.tvGoalDashboard);
             tvProgress = itemView.findViewById(R.id.tvProgressGoal);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -82,7 +81,7 @@ public class GoalAdaptor extends RecyclerView.Adapter<GoalAdaptor.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull GoalAdaptor.ViewHolder holder, int i) {
-        getProgress(goal.get(i).getId());
+        totalProgress = getProgress(goal.get(i).getId());
         holder.itemView.setTag(goal.get(i));
         holder.tvTitle.setText(goal.get(i).getName());
         holder.tvProgress.setText(totalProgress+"%");
@@ -94,12 +93,12 @@ public class GoalAdaptor extends RecyclerView.Adapter<GoalAdaptor.ViewHolder> {
         return goal.size();
     }
 
-    private void getProgress(long goalID) {
+    private int getProgress(long goalID) {
         pgd = pdh.getProgressesByGoal(goalID);
         int prog = 0;
         for (int i = 0; i < pgd.size(); ++i) {
-            prog = prog + pgd.get(i).getProgress();
+            prog += pgd.get(i).getProgress();
         }
-        totalProgress = prog/pgd.size();
+        return (prog/pgd.size());
     }
 }

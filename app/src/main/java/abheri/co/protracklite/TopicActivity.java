@@ -54,6 +54,11 @@ public class TopicActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 myAdaptor.notifyDataSetChanged();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
                 swipeRefreshLayout.setRefreshing(false);
             }

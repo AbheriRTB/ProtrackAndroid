@@ -17,7 +17,7 @@
         />
 
     <TextView
-        android:id="@+id/tvChoiceTitle"
+        android:id="@+id/tvGoalDashboard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -36,7 +36,7 @@
         android:text="TextView"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/cbChoice"
-        app:layout_constraintTop_toBottomOf="@+id/tvChoiceTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvGoalDashboard" />
 
     <View
         android:id="@+id/divider2"

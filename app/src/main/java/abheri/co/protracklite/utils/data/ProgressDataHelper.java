@@ -17,8 +17,8 @@ public class ProgressDataHelper {
 
     private SQLiteDatabase database;
     private final DataHelper dbHelper;
-    private final String[] allColumns = {DataHelper.COLUMN_PID,
-            DataHelper.COLUMN_PROGRESS, DataHelper.COLUMN_DATE, DataHelper.TOPICDATA_ID};
+    private final String[] allColumns = {DataHelper.COLUMN_PROGRESS_ID,
+            DataHelper.COLUMN_PROGRESS, DataHelper.COLUMN_DATE, DataHelper.MAP_ID};
 
     public ProgressDataHelper(Context context) {
         dbHelper = new DataHelper(context);
@@ -43,10 +43,11 @@ public class ProgressDataHelper {
         //values.put(DataHelper.COLUMN_PID, tid);
         values.put(DataHelper.COLUMN_PROGRESS, progress);
         values.put(DataHelper.COLUMN_DATE, progressDate);
-        values.put(DataHelper.TOPICDATA_ID, tdataID);
+        values.put(DataHelper.MAP_ID, tdataID);
+        values.put(DataHelper.IS_LATEST, 1);
         long insertId = database.insert(DataHelper.TABLE_PROGRESS, null, values);
         Cursor cursor = database.query(DataHelper.TABLE_PROGRESS,
-                allColumns, DataHelper.COLUMN_PID + " = " + insertId, null,
+                allColumns, DataHelper.COLUMN_PROGRESS_ID + " = " + insertId, null,
                 null, null, null);
         cursor.moveToFirst();
         Progress newProgress = cursorToProgress(cursor);
@@ -54,10 +55,21 @@ public class ProgressDataHelper {
         return newProgress;
     }
 
+    public int resetProgressIsLatest(long mapId) {
+        List<Progress> progresses = new ArrayList<Progress>();
+        String query = "Update " + DataHelper.TABLE_PROGRESS + " set " + DataHelper.IS_LATEST + "= 0 WHERE " + DataHelper.MAP_ID + "=" + mapId + ";";
+
+        Cursor cursor = database.rawQuery(query, null);
+
+        cursor.moveToFirst();
+
+        return cursor.getCount();
+    }
+
     public void deleteProgress(Progress topic) {
         long id = topic.getProgress_id();
         System.out.println("Progress deleted with id: " + id);
-        database.delete(DataHelper.TABLE_PROGRESS, DataHelper.COLUMN_PID
+        database.delete(DataHelper.TABLE_PROGRESS, DataHelper.COLUMN_PROGRESS_ID
                 + " = " + id, null);
     }
 
@@ -86,7 +98,7 @@ public class ProgressDataHelper {
     public List<Progress> getProgressesByMAP(long tdata_id) {
         List<Progress> progresses = new ArrayList<Progress>();
 
-        String query = "SELECT * FROM " + DataHelper.TABLE_PROGRESS + " WHERE " + DataHelper.COLUMN_TDMID + "=" + tdata_id + ";";
+        String query = "SELECT * FROM " + DataHelper.TABLE_PROGRESS + " WHERE " + DataHelper.COLUMN_MAP_ID + "=" + tdata_id + ";";
 
         Cursor cursor = database.rawQuery(query, null);
 
@@ -104,11 +116,11 @@ public class ProgressDataHelper {
     public List<ProgressDetails> getProgressesByTopicID(long topic_ID) {
         List<ProgressDetails> progressDetails = new ArrayList<ProgressDetails>();
 
-        String query = "SELECT " + DataHelper.COLUMN_PROGRESS + "," + DataHelper.TOPICDATA_ID + "," +
+        String query = "SELECT " + DataHelper.COLUMN_PROGRESS + "," + DataHelper.MAP_ID + "," +
                 DataHelper.COLUMN_DATE +
                 " FROM " + DataHelper.TABLE_PROGRESS +
-                " WHERE " + DataHelper.TOPICDATA_ID + " in ( " +
-                "SELECT " + DataHelper.COLUMN_TDMID + " FROM " + DataHelper.TABLE_TOPIC_DATA_MAP +
+                " WHERE " + DataHelper.MAP_ID + " in ( " +
+                "SELECT " + DataHelper.COLUMN_MAP_ID + " FROM " + DataHelper.TABLE_TOPIC_DATA_MAP +
                 " WHERE " + DataHelper.TOPIC_ID + "=" + topic_ID +
                 ");";
         Cursor cursor = database.rawQuery(query, null);
@@ -127,19 +139,20 @@ public class ProgressDataHelper {
     public List<ProgressGoalDetails> getProgressesByGoal(long goal_ID) {
         List<ProgressGoalDetails> progressDetails = new ArrayList<ProgressGoalDetails>();
 
-        String query = "SELECT " + DataHelper.GOAL_ID + "," + DataHelper.COLUMN_PROGRESS + "," + DataHelper.COLUMN_TDMID + "," +
+        String query = "SELECT " + DataHelper.GOAL_ID + "," + DataHelper.COLUMN_PROGRESS + "," + DataHelper.COLUMN_MAP_ID + "," +
                 DataHelper.COLUMN_DATE +
                 " FROM " + DataHelper.TABLE_PROGRESS + " a " +
                 " INNER JOIN " + DataHelper.TABLE_TOPIC_DATA_MAP + " b on " +
-                "a." + DataHelper.TOPICDATA_ID + "=" +
-                "b." + DataHelper.COLUMN_TDMID +
+                "a." + DataHelper.MAP_ID + "=" +
+                "b." + DataHelper.COLUMN_MAP_ID +
                 " WHERE b." + DataHelper.GOAL_ID + "=" + goal_ID +
+                " AND a." + DataHelper.IS_LATEST + "= 1" +
                 ";";
         Cursor cursor = database.rawQuery(query, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            ProgressGoalDetails progressGoalDetail = cursorToGoal(cursor, goal_ID);
+            ProgressGoalDetails progressGoalDetail = cursorToGoal(cursor);
             progressDetails.add(progressGoalDetail);
             cursor.moveToNext();
         }
@@ -166,12 +179,12 @@ public class ProgressDataHelper {
         return progressDetails;
     }
 
-    private ProgressGoalDetails cursorToGoal(Cursor cursor, long goalID) {
+    private ProgressGoalDetails cursorToGoal(Cursor cursor) {
         ProgressGoalDetails progressGoalDetails = new ProgressGoalDetails();
-        progressGoalDetails.setGoalID(goalID);
-        progressGoalDetails.setProgress(cursor.getInt(0));
-        progressGoalDetails.setMapID(cursor.getLong(1));
-        progressGoalDetails.setDate(cursor.getString(2));
+        progressGoalDetails.setGoalID(cursor.getLong(0));
+        progressGoalDetails.setProgress(cursor.getInt(1));
+        progressGoalDetails.setMapID(cursor.getLong(2));
+        progressGoalDetails.setDate(cursor.getString(3));
         return progressGoalDetails;
     }
 }

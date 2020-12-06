@@ -25,10 +25,7 @@ public class SubjectActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.Adapter myAdaptor;
     RecyclerView.LayoutManager layoutManager;
-    FloatingActionButton fabAdd;
     ArrayList<OldTopic> oldTopics;
-    CharSequence[] english, social, maths, science, lang;
-    List<Subject> list;
     TextView tvTitle;
     List<Subject> subjects;
     List<Topic> topics;
@@ -46,9 +43,6 @@ public class SubjectActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         oldTopics = new ArrayList<OldTopic>();
-
-
-
 
         /*fabAdd = findViewById(R.id.fabAdd);
         fabAdd.setColorFilter(Color.WHITE);
@@ -76,38 +70,6 @@ public class SubjectActivity extends AppCompatActivity {
             }
         });
 */
-        english = new CharSequence[]{
-                "The Fun They Had",
-                "The Sound of Music",
-                "The Little Girl",
-                "A Truly Beautiful Mind",
-                "The Snake and The Mirror",
-                "My Childhood",
-        };
-        science = new CharSequence[]{
-                "Matter in Our Surrounding",
-                "Is Matter Around Us Pure",
-                "Atoms and Molecules",
-                "Structure of the Atom",
-                "The Fundamental of Unit of Life",
-                "Tissues",
-                "Diversity in Living Organism",
-        };
-        social = new CharSequence[]{
-                "The French Revolution",
-                "Socialism in Europe and the Russian Revolution",
-                "Nazism and the Rise of Hitler",
-                "Forest Society and Colonialism",
-                "Pastoralists in the Modern World",
-        };
-        lang = new CharSequence[]{
-                "Chapter V",
-                "Chapter VIII"
-        };
-        maths = new CharSequence[]{
-                "Chapter IX",
-                "Chapter X"
-        };
 
         SubjectDataHelper sdh = new SubjectDataHelper(this);
 

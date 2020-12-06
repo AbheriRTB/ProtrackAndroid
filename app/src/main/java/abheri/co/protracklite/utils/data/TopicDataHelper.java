@@ -15,8 +15,8 @@ public class TopicDataHelper {
 
     private SQLiteDatabase database;
     private DataHelper dbHelper;
-    private String[] allColumns = {DataHelper.COLUMN_TID,
-            DataHelper.COLUMN_TOPIC, DataHelper.COLUMN_TDISC, DataHelper.SUBJECT_ID};
+    private String[] allColumns = {DataHelper.COLUMN_TOPIC_ID,
+            DataHelper.COLUMN_TOPIC, DataHelper.COLUMN_TOPIC_DESCRIPTION, DataHelper.SUBJECT_ID};
 
     public TopicDataHelper(Context context) {
         dbHelper = new DataHelper(context);
@@ -40,11 +40,11 @@ public class TopicDataHelper {
         ContentValues values = new ContentValues();
         //values.put(DataHelper.COLUMN_TID, tid);
         values.put(DataHelper.COLUMN_TOPIC, topic);
-        values.put(DataHelper.COLUMN_TDISC, topicDisc);
+        values.put(DataHelper.COLUMN_TOPIC_DESCRIPTION, topicDisc);
         values.put(DataHelper.SUBJECT_ID, subjID);
         long insertId = database.insert(DataHelper.TABLE_TOPIC, null, values);
         Cursor cursor = database.query(DataHelper.TABLE_TOPIC,
-                allColumns, DataHelper.COLUMN_TID + " = " + insertId, null,
+                allColumns, DataHelper.COLUMN_TOPIC_ID + " = " + insertId, null,
                 null, null, null);
         cursor.moveToFirst();
         Topic newTopic = cursorToTopic(cursor);
@@ -55,7 +55,7 @@ public class TopicDataHelper {
     public void deleteTopic(Topic topic) {
         long id = topic.getTopicID();
         System.out.println("Topic deleted with id: " + id);
-        database.delete(DataHelper.TABLE_TOPIC, DataHelper.COLUMN_TID
+        database.delete(DataHelper.TABLE_TOPIC, DataHelper.COLUMN_TOPIC_ID
                 + " = " + id, null);
     }
 

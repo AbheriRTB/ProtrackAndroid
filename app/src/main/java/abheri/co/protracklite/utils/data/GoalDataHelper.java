@@ -14,8 +14,8 @@ import abheri.co.protracklite.utils.builders.Goal;
 public class GoalDataHelper {
     private SQLiteDatabase database;
     private DataHelper dbHelper;
-    private String[] allColumns = {DataHelper.COLUMN_GID,
-            DataHelper.COLUMN_GOAL, DataHelper.COLUMN_GDISC, DataHelper.COLUMN_GID, DataHelper.COLUMN_ENDDATE};
+    private String[] allColumns = {DataHelper.COLUMN_GOAL_ID,
+            DataHelper.COLUMN_GOAL, DataHelper.COLUMN_GOAL_DESCRIPTION, DataHelper.COLUMN_GOAL_ID, DataHelper.COLUMN_END_DATE};
 
     public GoalDataHelper(Context context) {
 
@@ -39,13 +39,13 @@ public class GoalDataHelper {
     public Goal createGoal(String goal, String description, String end_date) {
         ContentValues values = new ContentValues();
         values.put(DataHelper.COLUMN_GOAL, goal);
-        values.put(DataHelper.COLUMN_GDISC, description);
-        values.put(DataHelper.COLUMN_ENDDATE, end_date);
+        values.put(DataHelper.COLUMN_GOAL_DESCRIPTION, description);
+        values.put(DataHelper.COLUMN_END_DATE, end_date);
 
         long insertId = database.insert(DataHelper.TABLE_GOAL, null, values);
         //values.put(DataHelper.COLUMN_GID, insertId);
         Cursor cursor = database.query(DataHelper.TABLE_GOAL,
-                allColumns, DataHelper.COLUMN_GID + " = " + insertId, null,
+                allColumns, DataHelper.COLUMN_GOAL_ID + " = " + insertId, null,
                 null, null, null);
         cursor.moveToFirst();
         Goal newGoal = cursorToGoal(cursor);
@@ -56,7 +56,7 @@ public class GoalDataHelper {
     public void deleteGoal(Goal goal) {
         long id = goal.getId();
         System.out.println("Sentence deleted with id: " + id);
-        database.delete(DataHelper.TABLE_GOAL, DataHelper.COLUMN_GID
+        database.delete(DataHelper.TABLE_GOAL, DataHelper.COLUMN_GOAL_ID
                 + " = " + id, null);
     }
 
@@ -87,7 +87,7 @@ public class GoalDataHelper {
     public List<Goal> getAllGoals(long goal_id) {
         List<Goal> goals = new ArrayList<Goal>();
 
-        String query = "SELECT * FROM " + DataHelper.TABLE_GOAL + " WHERE " + DataHelper.COLUMN_GID + "=" + goal_id + ";";
+        String query = "SELECT * FROM " + DataHelper.TABLE_GOAL + " WHERE " + DataHelper.COLUMN_GOAL_ID + "=" + goal_id + ";";
 
         Cursor cursor = database.rawQuery(query, null);
 

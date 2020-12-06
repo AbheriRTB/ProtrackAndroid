@@ -2,11 +2,9 @@ package abheri.co.protracklite.utils.adaptors;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -84,7 +82,7 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
 
 
             tvTopicDialog = itemView.findViewById(R.id.tvTopicDialog);
-            tvTopic = itemView.findViewById(R.id.tvChoiceTitle);
+            tvTopic = itemView.findViewById(R.id.tvGoalDashboard);
             tvSubject = itemView.findViewById(R.id.tvChoiceSubject);
             tvProgress = itemView.findViewById(R.id.tvProgress);
             View view = inflater.inflate(R.layout.dialog_status, null);
@@ -186,6 +184,7 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
                                 Calendar calendar = Calendar.getInstance();
                                 String time = calendar.get(Calendar.DATE) + "/" + calendar.get(Calendar.MONTH) + "/"
                                         + calendar.get(Calendar.YEAR);
+                                pdh.resetProgressIsLatest(ps.get(i).getTopicdata_id());
                                 pdh.createProgress(progress, time, ps.get(i).getTopicdata_id());
                                 notifyDataSetChanged();
 

@@ -14,8 +14,8 @@ import abheri.co.protracklite.utils.builders.Subject;
 public class SubjectDataHelper {
     private SQLiteDatabase database;
     private DataHelper dbHelper;
-    private String[] allColumns = {DataHelper.COLUMN_SID,
-            DataHelper.COLUMN_SUBJECT, DataHelper.COLUMN_SUBDISC, DataHelper.COLUMN_SID};
+    private String[] allColumns = {DataHelper.COLUMN_SUBJECT_ID,
+            DataHelper.COLUMN_SUBJECT, DataHelper.COLUMN_SUBJECT_DESCRIPTION, DataHelper.COLUMN_SUBJECT_ID};
 
     public SubjectDataHelper(Context context) {
 
@@ -38,14 +38,14 @@ public class SubjectDataHelper {
 
     public Subject createSubject(String subject, String description, int tid) {
         ContentValues values = new ContentValues();
-        values.put(DataHelper.COLUMN_SID, tid);
+        values.put(DataHelper.COLUMN_SUBJECT_ID, tid);
         values.put(DataHelper.COLUMN_SUBJECT, subject);
-        values.put(DataHelper.COLUMN_SUBDISC, description);
+        values.put(DataHelper.COLUMN_SUBJECT_DESCRIPTION, description);
 
         long insertId = database.insert(DataHelper.TABLE_SUBJECT, null,
                 values);
         Cursor cursor = database.query(DataHelper.TABLE_SUBJECT,
-                allColumns, DataHelper.COLUMN_SID + " = " + tid, null,
+                allColumns, DataHelper.COLUMN_SUBJECT_ID + " = " + tid, null,
                 null, null, null);
         cursor.moveToFirst();
         Subject newSubject = cursorToSubject(cursor);
@@ -56,7 +56,7 @@ public class SubjectDataHelper {
     public void deleteSubject(Subject subject) {
         long id = subject.getId();
         System.out.println("Sentence deleted with id: " + id);
-        database.delete(DataHelper.TABLE_SUBJECT, DataHelper.COLUMN_SID
+        database.delete(DataHelper.TABLE_SUBJECT, DataHelper.COLUMN_SUBJECT_ID
                 + " = " + id, null);
     }
 
@@ -87,7 +87,7 @@ public class SubjectDataHelper {
     public List<Subject> getSubjects(long subject_id) {
         List<Subject> subjects = new ArrayList<Subject>();
 
-        String query = "SELECT * FROM " + DataHelper.TABLE_SUBJECT + " WHERE " + DataHelper.COLUMN_SID + "=" + subject_id + ";";
+        String query = "SELECT * FROM " + DataHelper.TABLE_SUBJECT + " WHERE " + DataHelper.COLUMN_SUBJECT_ID + "=" + subject_id + ";";
 
         Cursor cursor = database.rawQuery(query, null);
 
