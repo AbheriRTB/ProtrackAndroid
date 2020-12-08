@@ -58,7 +58,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="#FFFFFF"
-            app:backgroundTint="@color/colorPrimary"
             app:menu="@menu/add_menu"
             app:fabAlignmentMode="end" />
 
