@@ -1,23 +1,27 @@
 package abheri.co.protracklite;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.widget.TextView;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.bottomappbar.BottomAppBar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import abheri.co.protracklite.utils.adaptors.SubjectAdaptor;
-import abheri.co.protracklite.utils.builders.Subject;
-import abheri.co.protracklite.utils.data.SubjectDataHelper;
 import abheri.co.protracklite.utils.builders.OldTopic;
+import abheri.co.protracklite.utils.builders.Subject;
 import abheri.co.protracklite.utils.builders.Topic;
+import abheri.co.protracklite.utils.data.SubjectDataHelper;
 import abheri.co.protracklite.utils.data.TopicDataHelper;
 
 public class SubjectActivity extends AppCompatActivity {
@@ -27,9 +31,29 @@ public class SubjectActivity extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     ArrayList<OldTopic> oldTopics;
     TextView tvTitle;
+    BottomAppBar bottomAppBar;
     List<Subject> subjects;
     List<Topic> topics;
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.add_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // action with ID action_settings was selected
+            case R.id.back:
+                startActivity(new Intent(SubjectActivity.this, DashboardActivity.class));
+
+        }
+
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +63,8 @@ public class SubjectActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.listGoal);
         recyclerView.setHasFixedSize(true);
         tvTitle = findViewById(R.id.tvTitle2);
+        bottomAppBar = findViewById(R.id.topicMenuBar);
+        setSupportActionBar(bottomAppBar);
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);

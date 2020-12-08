@@ -15,7 +15,7 @@ public class GoalDataHelper {
     private SQLiteDatabase database;
     private DataHelper dbHelper;
     private String[] allColumns = {DataHelper.COLUMN_GOAL_ID,
-            DataHelper.COLUMN_GOAL, DataHelper.COLUMN_GOAL_DESCRIPTION, DataHelper.COLUMN_GOAL_ID, DataHelper.COLUMN_END_DATE};
+            DataHelper.COLUMN_GOAL, DataHelper.COLUMN_GOAL_DESCRIPTION, DataHelper.COLUMN_END_DATE};
 
     public GoalDataHelper(Context context) {
 
@@ -71,7 +71,7 @@ public class GoalDataHelper {
 
 
         Cursor cursor = database.query(DataHelper.TABLE_GOAL,
-                allColumns, null, null, null, null, null);
+                allColumns, null, null, null, null, DataHelper.COLUMN_END_DATE);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {

@@ -1,18 +1,16 @@
 package abheri.co.protracklite.utils.utilites;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-
 import java.util.List;
 
 import abheri.co.protracklite.R;
-import abheri.co.protracklite.TopicActivity;
 import abheri.co.protracklite.utils.adaptors.ChoiceAdaptor;
-import abheri.co.protracklite.utils.adaptors.TopicAdaptor;
 import abheri.co.protracklite.utils.builders.Topic;
 import abheri.co.protracklite.utils.data.TopicDataHelper;
 

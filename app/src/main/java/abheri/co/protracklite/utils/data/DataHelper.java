@@ -81,7 +81,7 @@ public class DataHelper extends SQLiteOpenHelper {
             + "(" + COLUMN_SUBJECT_ID + "));";
 
     private static final String progress_table = "create table "
-            + TABLE_PROGRESS + "("+ COLUMN_PROGRESS_ID
+            + TABLE_PROGRESS + "(" + COLUMN_PROGRESS_ID
             + " integer primary key AUTOINCREMENT, "
             + COLUMN_PROGRESS
             + " integer not null,"

@@ -81,7 +81,7 @@ public class DashboardActivity extends AppCompatActivity {
         DBFunctions();
         setContentView(R.layout.activity_dashboard);
 
-        appBar = findViewById(R.id.mainBottomAppBar);
+        appBar = findViewById(R.id.addMenuBar);
         setSupportActionBar(appBar);
         floatingActionButton = findViewById(R.id.fabAdd);
         swipeRefreshLayout = findViewById(R.id.srlDash);
@@ -97,11 +97,6 @@ public class DashboardActivity extends AppCompatActivity {
         goals = gdh.getAllGoals();
         TopicDataHelper tdh = new TopicDataHelper(this);
 
-        for (int i = 0; i < goals.size(); i++) {
-            List<Topic> lt;
-            lt = tdh.getTopicsBySubject(goals.get(i).getId());
-        }
-
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,6 +106,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         //LayoutInflater inflater = DashboardActivity.this.getLayoutInflater();
         myAdaptor = new DashAdaptor(this, goals, recyclerView);
+        myAdaptor.notifyDataSetChanged();
         recyclerView.setAdapter(myAdaptor);
 
         floatingActionButton.setColorFilter(Color.WHITE);

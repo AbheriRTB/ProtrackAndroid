@@ -84,16 +84,16 @@ public class TopicMapDataHelper {
         return topicDataMaps;
     }
 
-    public List<TopicDataMap> getTopicDataMaps(long goal_id) {
+    public List<TopicDataMap> getTopicDataMapsViaGoal(long goal_id) {
         List<TopicDataMap> topicDataMaps = new ArrayList<TopicDataMap>();
 
-        String query = "SELECT * FROM " + DataHelper.TABLE_TOPIC_DATA_MAP + " WHERE " + DataHelper.COLUMN_GOAL_ID + "=" + goal_id + ";";
+        String query = "SELECT * FROM " + DataHelper.TABLE_TOPIC_DATA_MAP + " WHERE " + DataHelper.GOAL_ID + "=" + goal_id + ";";
 
         Cursor cursor = database.rawQuery(query, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            TopicDataMap topicDataMap = cursorToTopicDataMap(cursor);
+            TopicDataMap topicDataMap = cursorToTopicDataMapViaGoal(cursor);
             topicDataMaps.add(topicDataMap);
             cursor.moveToNext();
         }
@@ -128,6 +128,14 @@ public class TopicMapDataHelper {
     }
 
     private TopicDataMap cursorToTopicDataMap(Cursor cursor) {
+        TopicDataMap topicDataMap = new TopicDataMap();
+        topicDataMap.setTdm_id(cursor.getInt(0));
+        topicDataMap.setGoal_id(cursor.getInt(1));
+        topicDataMap.setTopic_id(cursor.getInt(2));
+        return topicDataMap;
+    }
+
+    private TopicDataMap cursorToTopicDataMapViaGoal(Cursor cursor) {
         TopicDataMap topicDataMap = new TopicDataMap();
         topicDataMap.setTdm_id(cursor.getInt(0));
         topicDataMap.setGoal_id(cursor.getInt(1));

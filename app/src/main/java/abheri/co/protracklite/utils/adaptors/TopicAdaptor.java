@@ -21,10 +21,10 @@ import abheri.co.protracklite.utils.builders.GoalDetails;
 import abheri.co.protracklite.utils.builders.Progress;
 import abheri.co.protracklite.utils.builders.ProgressDetails;
 import abheri.co.protracklite.utils.builders.Subject;
+import abheri.co.protracklite.utils.builders.Topic;
 import abheri.co.protracklite.utils.builders.TopicDataMap;
 import abheri.co.protracklite.utils.data.ProgressDataHelper;
 import abheri.co.protracklite.utils.data.SubjectDataHelper;
-import abheri.co.protracklite.utils.builders.Topic;
 import abheri.co.protracklite.utils.data.TopicMapDataHelper;
 
 
@@ -58,7 +58,7 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
 
         goal_id = id_goal;
         gd = tmdh.getTopicsForGoal(goal_id);
-        tdm = tmdh.getAllTopicDataMaps();
+        tdm = tmdh.getTopicDataMapsViaGoal(goal_id);
 
 
         sdh = new SubjectDataHelper(context);
@@ -98,7 +98,7 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
                     //dialogBuilder.setView(view);
                     tvTopicDialog.setText(gd.get(i).getTopic_name());
                     tvSubjectDialog.setText(gd.get(i).getSubject_name());
-                    StatusDialog(i);
+                    StatusDialog(i, gd.get(i).getTopic_id());
                 }
             });
 
@@ -123,8 +123,8 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
         holder.itemView.setTag(gd.get(i));
         holder.tvTopic.setText(gd.get(i).getTopic_name());
         holder.tvSubject.setText(gd.get(i).getSubject_name());
-        if(progressDetails.size() > 0)
-            holder.tvProgress.setText(progressDetails.get(progressDetails.size()-1).getProgress() + "%");
+        if (progressDetails.size() > 0)
+            holder.tvProgress.setText(progressDetails.get(progressDetails.size() - 1).getProgress() + "%");
         else
             holder.tvProgress.setText("0");
     }
@@ -145,7 +145,7 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
         }
     }
 
-    private void StatusDialog(int i) {
+    private void StatusDialog(int i, long topicID) {
         View view = inflater.inflate(R.layout.dialog_status, null);
         statusDialog.setView(view);
 
@@ -159,8 +159,8 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
         tvSubjectDialog.setText(gd.get(i).getSubject_name());
         //tvDescriptionDialog.setText(gd.get(i).getGoal_description());
         int progress = 0;
-        if(progressDetails.size() > 0) {
-            progress = progressDetails.get(progressDetails.size()-1).getProgress();
+        if (progressDetails.size() > 0) {
+            progress = progressDetails.get(progressDetails.size() - 1).getProgress();
         }
         tvProgressDialog.setText(progress + "%");
         /*statusDialog.setTitle(gd.get(i).getTopic_name())
@@ -180,12 +180,19 @@ public class TopicAdaptor extends RecyclerView.Adapter<TopicAdaptor.ViewHolder> 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 int progress;
+                                long selectedMapId = 0;
                                 progress = (int) slider.getValue();
                                 Calendar calendar = Calendar.getInstance();
                                 String time = calendar.get(Calendar.DATE) + "/" + calendar.get(Calendar.MONTH) + "/"
                                         + calendar.get(Calendar.YEAR);
-                                pdh.resetProgressIsLatest(ps.get(i).getTopicdata_id());
-                                pdh.createProgress(progress, time, ps.get(i).getTopicdata_id());
+                                for (int t = 0; t < tdm.size(); ++t) {
+                                    if (tdm.get(t).getTopic_id() == topicID) {
+                                        selectedMapId = tdm.get(t).getTdm_id();
+                                        break;
+                                    }
+                                }
+                                pdh.resetProgressIsLatest(selectedMapId);
+                                pdh.createProgress(progress, time, selectedMapId);
                                 notifyDataSetChanged();
 
                             }

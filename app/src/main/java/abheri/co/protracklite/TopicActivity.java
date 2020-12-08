@@ -1,18 +1,23 @@
 package abheri.co.protracklite;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
+import com.google.android.material.bottomappbar.BottomAppBar;
 
 import java.util.List;
 
-import abheri.co.protracklite.utils.builders.Topic;
 import abheri.co.protracklite.utils.adaptors.TopicAdaptor;
+import abheri.co.protracklite.utils.builders.Topic;
 import abheri.co.protracklite.utils.data.TopicDataHelper;
 
 public class TopicActivity extends AppCompatActivity {
@@ -23,7 +28,28 @@ public class TopicActivity extends AppCompatActivity {
     List<Topic> topics;
     SwipeRefreshLayout swipeRefreshLayout;
     Topic topic;
+    BottomAppBar bottomAppBar;
     long id_goal;
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // action with ID action_settings was selected
+            case R.id.homeMenu:
+                startActivity(new Intent(TopicActivity.this, DashboardActivity.class));
+
+        }
+
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +59,8 @@ public class TopicActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.listGoal);
         swipeRefreshLayout = findViewById(R.id.srlTopic);
         recyclerView.setHasFixedSize(true);
+        bottomAppBar = findViewById(R.id.topicMenuBar);
+        setSupportActionBar(bottomAppBar);
 
         int c1 = getResources().getColor(R.color.colorPrimaryAccent);
 

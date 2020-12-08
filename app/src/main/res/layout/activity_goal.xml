@@ -48,17 +48,18 @@
             android:clickable="true"
             android:contentDescription="Add"
             android:focusable="true"
-            app:layout_anchor="@id/GoalBottomAppBar"
+            app:layout_anchor="@id/goalMenuBar"
             app:srcCompat="@drawable/add" />
 
         <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/GoalBottomAppBar"
+            android:id="@+id/goalMenuBar"
             style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="#FFFFFF"
             app:backgroundTint="@color/colorPrimary"
+            app:menu="@menu/add_menu"
             app:fabAlignmentMode="end" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

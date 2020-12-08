@@ -4,6 +4,7 @@
 
     <item
         android:icon="@drawable/abc_vector_test"
+        android:id="@+id/back"
         android:title="Item"
         app:showAsAction="always" />
 </menu>

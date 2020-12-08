@@ -84,7 +84,7 @@ public class GoalAdaptor extends RecyclerView.Adapter<GoalAdaptor.ViewHolder> {
         totalProgress = getProgress(goal.get(i).getId());
         holder.itemView.setTag(goal.get(i));
         holder.tvTitle.setText(goal.get(i).getName());
-        holder.tvProgress.setText(totalProgress+"%");
+        holder.tvProgress.setText(totalProgress + "%");
 
     }
 
@@ -99,6 +99,6 @@ public class GoalAdaptor extends RecyclerView.Adapter<GoalAdaptor.ViewHolder> {
         for (int i = 0; i < pgd.size(); ++i) {
             prog += pgd.get(i).getProgress();
         }
-        return (prog/pgd.size());
+        return (prog / pgd.size());
     }
 }

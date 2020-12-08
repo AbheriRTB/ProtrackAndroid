@@ -46,7 +46,6 @@ public class DashAdaptor extends RecyclerView.Adapter<DashAdaptor.ViewHolder> {
         thisContext = context;
         recyclerView = recyclerViewOnClick;
         pdh = new ProgressDataHelper(context);
-        ps = pdh.getAllProgresses();
         notifyDataSetChanged();
 
     }
@@ -91,8 +90,8 @@ public class DashAdaptor extends RecyclerView.Adapter<DashAdaptor.ViewHolder> {
         holder.itemView.setTag(goal.get(i));
         holder.tvGoal.setText(goal.get(i).getName());
         holder.tvDescription.setText(goal.get(i).getDescription());
-        //holder.tvEndDate.setText(goal.get(i).getDate());
-        holder.tvProgress.setText(totalProgress+"%");
+        holder.tvEndDate.setText("Ending on "+goal.get(i).getDate());
+        holder.tvProgress.setText(totalProgress + "%");
         holder.pbProgress.setProgress(totalProgress);
 
     }
@@ -108,6 +107,6 @@ public class DashAdaptor extends RecyclerView.Adapter<DashAdaptor.ViewHolder> {
         for (int i = 0; i < pgd.size(); ++i) {
             prog += pgd.get(i).getProgress();
         }
-        return (prog/pgd.size());
+        return (prog / pgd.size());
     }
 }

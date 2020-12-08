@@ -12,7 +12,7 @@ public class GoalDetails {
     String subject_name;
     String topic_name;
 
-    public  GoalDetails(){
+    public GoalDetails() {
 
     }
 
